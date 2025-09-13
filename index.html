@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,7 @@
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
+            overflow-y: auto;
         }
         .presentation-container {
             position: relative;
@@ -274,72 +276,6 @@
             color: var(--text-secondary);
             line-height: 1.4;
         }
-        /* Navigation */
-        .nav-controls {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-        }
-        .nav-button {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--border-accent);
-            color: var(--mars-red);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 500;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .nav-button:hover {
-            background: rgba(255, 122, 69, 0.2);
-            border-color: var(--mars-red);
-            transform: translateY(-1px);
-        }
-        /* Progress Indicator */
-        .progress-indicator {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-        }
-        .progress-bar {
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--mars-red), var(--warning-orange));
-            width: 0;
-            transition: width 0.5s ease;
-            border-radius: 2px;
-        }
-        .progress-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-tertiary);
-            margin-top: 0.5rem;
-        }
         /* Call to Action */
         .cta-button {
             background: linear-gradient(135deg, var(--mars-red), var(--warning-orange));
@@ -379,12 +315,6 @@
             }
             .data-card {
                 padding: 1.5rem;
-            }
-            .nav-controls {
-                bottom: 1rem;
-                left: 50%;
-                transform: translateX(-50%);
-                flex-direction: row;
             }
             .progress-indicator {
                 top: 0.5rem;
@@ -437,14 +367,6 @@
     <div class="presentation-container">
         <div class="mars-atmosphere"></div>
         
-        <!-- Progress Indicator -->
-        <div class="progress-indicator">
-            <div class="progress-text mono-text">SCENE <span id="current-scene">1</span> OF <span id="total-scenes">7</span></div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-        </div>
-
         <!-- Scene 1: Problem Statement -->
         <div class="scene" id="scene-1">
             <div class="scene-content content-single">
@@ -875,110 +797,9 @@
                 </div>
             </div>
         </div>
-
-        <!-- Navigation Controls -->
-        <div class="nav-controls">
-            <button class="nav-button" onclick="prevScene()">← PREV</button>
-            <button class="nav-button" onclick="nextScene()">NEXT →</button>
-        </div>
     </div>
 
     <script>
-        // Get all scenes
-        const scenes = document.querySelectorAll('.scene');
-        const totalScenes = scenes.length;
-        const progressFill = document.getElementById('progress-fill');
-        const currentSceneElement = document.getElementById('current-scene');
-        const totalScenesElement = document.getElementById('total-scenes');
-        
-        // Set total scenes count
-        totalScenesElement.textContent = totalScenes;
-        
-        // Initialize current scene
-        let currentSceneIndex = 0;
-        
-        // Update progress bar
-        function updateProgress() {
-            const progress = ((currentSceneIndex + 1) / totalScenes) * 100;
-            progressFill.style.width = `${progress}%`;
-            currentSceneElement.textContent = currentSceneIndex + 1;
-        }
-        
-        // Navigate to specific scene
-        function goToScene(index) {
-            if (index >= 0 && index < totalScenes) {
-                currentSceneIndex = index;
-                updateProgress();
-                
-                // Update URL hash
-                window.location.hash = `scene-${currentSceneIndex + 1}`;
-            }
-        }
-        
-        // Next scene
-        function nextScene() {
-            if (currentSceneIndex < totalScenes - 1) {
-                goToScene(currentSceneIndex + 1);
-                // Smooth scroll to next scene
-                scenes[currentSceneIndex].scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        // Previous scene
-        function prevScene() {
-            if (currentSceneIndex > 0) {
-                goToScene(currentSceneIndex - 1);
-                // Smooth scroll to previous scene
-                scenes[currentSceneIndex].scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                nextScene();
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                prevScene();
-            }
-        });
-        
-        // Handle hash changes
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash;
-            if (hash) {
-                const match = hash.match(/scene-(\d+)/);
-                if (match) {
-                    const sceneNum = parseInt(match[1]) - 1;
-                    if (sceneNum >= 0 && sceneNum < totalScenes) {
-                        goToScene(sceneNum);
-                    }
-                }
-            }
-        });
-        
-        // Initialize
-        window.addEventListener('load', () => {
-            // Check for hash in URL
-            const hash = window.location.hash;
-            if (hash) {
-                const match = hash.match(/scene-(\d+)/);
-                if (match) {
-                    const sceneNum = parseInt(match[1]) - 1;
-                    if (sceneNum >= 0 && sceneNum < totalScenes) {
-                        goToScene(sceneNum);
-                    }
-                }
-            } else {
-                // Default to first scene
-                goToScene(0);
-            }
-            
-            // Ensure we're scrolled to the correct scene
-            scenes[currentSceneIndex].scrollIntoView({ behavior: 'auto' });
-        });
-        
         // Success message when button is clicked
         function showSuccessMessage(event) {
             event.preventDefault();
@@ -1037,12 +858,6 @@
             if (successOverlay) {
                 document.body.removeChild(successOverlay);
             }
-        }
-        
-        // Add fade-in animation
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </script>
 </body>
