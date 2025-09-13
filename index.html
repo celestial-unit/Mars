@@ -94,7 +94,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.3) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(205, 92, 35, 0.2) 0%, transparent 60%),
                 radial-gradient(circle at 50% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 80%);
@@ -199,7 +199,7 @@
             border-radius: 20px;
             padding: 3rem;
             backdrop-filter: blur(15px);
-            box-shadow: 
+            box-shadow:
                 0 0 50px rgba(255, 107, 53, 0.2),
                 inset 0 0 50px rgba(255, 107, 53, 0.05);
             position: relative;
@@ -210,7 +210,7 @@
 
         .data-panel:hover {
             transform: perspective(1000px) rotateY(0deg) scale(1.02);
-            box-shadow: 
+            box-shadow:
                 0 0 80px rgba(255, 107, 53, 0.4),
                 inset 0 0 50px rgba(255, 107, 53, 0.1);
         }
@@ -284,11 +284,11 @@
             height: 400px;
             border: 3px solid #00ff87;
             border-radius: 50%;
-            background: 
+            background:
                 radial-gradient(circle at center, rgba(0, 255, 135, 0.1) 0%, transparent 70%),
                 radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.2) 0%, transparent 50%);
             animation: hologramRotate 8s linear infinite;
-            box-shadow: 
+            box-shadow:
                 0 0 50px rgba(0, 255, 135, 0.3),
                 inset 0 0 50px rgba(0, 255, 135, 0.1);
         }
@@ -307,7 +307,7 @@
             height: 100px;
             background: linear-gradient(145deg, #ff6b35, #cd5c23);
             border-radius: 20px;
-            box-shadow: 
+            box-shadow:
                 0 0 40px rgba(255, 107, 53, 0.6),
                 inset 0 0 20px rgba(255, 255, 255, 0.1);
             animation: coreHum 3s ease-in-out infinite;
@@ -329,24 +329,24 @@
         }
 
         @keyframes beamDeflect {
-            0% { 
-                transform: translateX(-250px) translateY(0); 
-                opacity: 1; 
+            0% {
+                transform: translateX(-250px) translateY(0);
+                opacity: 1;
                 box-shadow: 0 0 20px #ff4757;
             }
-            25% { 
-                transform: translateX(-100px) translateY(0); 
-                opacity: 1; 
+            25% {
+                transform: translateX(-100px) translateY(0);
+                opacity: 1;
             }
-            50% { 
-                transform: translateX(0px) translateY(-120px); 
-                opacity: 0.8; 
+            50% {
+                transform: translateX(0px) translateY(-120px);
+                opacity: 0.8;
                 box-shadow: 0 0 30px #00ff87;
                 background: #00ff87;
             }
-            100% { 
-                transform: translateX(200px) translateY(-200px); 
-                opacity: 0; 
+            100% {
+                transform: translateX(200px) translateY(-200px);
+                opacity: 0;
             }
         }
 
@@ -534,37 +534,37 @@
 
         /* Scene Specific Styles */
         .scene-1 {
-            background-image: 
+            background-image:
                 linear-gradient(rgba(139, 0, 0, 0.4), rgba(0, 0, 0, 0.8)),
                 url('https://science.nasa.gov/wp-content/uploads/2023/07/mars-dust-storm-pia22908.jpg');
         }
 
         .scene-2 {
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
                 url('https://science.nasa.gov/wp-content/uploads/2023/09/mars-curiosity-crater.jpg');
         }
 
         .scene-3 {
-            background: 
+            background:
                 radial-gradient(circle at 30% 40%, rgba(0, 255, 135, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 70% 60%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
                 linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
         }
 
         .scene-4 {
-            background: 
+            background:
                 linear-gradient(135deg, #0a0a0a 0%, #0e3e52 50%, #1a1a2e 100%);
         }
 
         .scene-5 {
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
                 url('https://science.nasa.gov/wp-content/uploads/2024/02/mars-from-hubble-pia03606.jpg');
         }
 
         .scene-6 {
-            background: 
+            background:
                 radial-gradient(circle at center, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
                 linear-gradient(135deg, #0a0a0a 0%, #2d1b1b 50%, #1a0f0f 100%);
         }
@@ -602,16 +602,16 @@
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
-            
+
             .title-massive {
                 font-size: clamp(3rem, 8vw, 8rem);
             }
-            
+
             .nav-control {
                 bottom: 20px;
                 right: 20px;
             }
-            
+
             .progress-arc {
                 top: 20px;
                 left: 20px;
@@ -621,27 +621,26 @@
 </head>
 <body>
     <div class="cursor"></div>
-    
+
     <div class="cinematic-bars top"></div>
     <div class="cinematic-bars bottom"></div>
-    
+
     <div class="progress-arc">
         <svg class="progress-circle" width="80" height="80">
             <circle class="progress-background" cx="40" cy="40" r="36"></circle>
             <circle class="progress-bar" cx="40" cy="40" r="36" stroke-dasharray="226" stroke-dashoffset="226"></circle>
         </svg>
     </div>
-    
+
     <div class="experience-container">
         <div class="mars-atmosphere"></div>
         <div class="particle-field"></div>
-        
-        <!-- Scene 1: The Crisis -->
+
         <div class="scene scene-1 active">
             <div class="content-viewport">
                 <div class="title-massive">MARS</div>
                 <div class="subtitle-glow">THE RED PLANET WANTS YOU DEAD</div>
-                
+
                 <div style="margin-top: 4rem; text-align: center;">
                     <div class="threat-indicator">
                         <h2 style="color: #ff4757; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">⚠️ CRITICAL THREAT ANALYSIS</h2>
@@ -652,27 +651,121 @@
                         </p>
                     </div>
                 </div>
-                
+
                 <div style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); color: #666; font-size: 1.1rem;">
                     Current Mars protection systems: <strong style="color: #ff4757;">INSUFFICIENT</strong>
                 </div>
             </div>
         </div>
 
-        <!-- Scene 4: AI Control Center -->
+        <div class="scene scene-2">
+            <div class="content-viewport">
+                <div class="content-split">
+                    <div>
+                        <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; color: #00ff87; margin-bottom: 2rem;">
+                            RADS-M
+                        </h1>
+                        <h2 style="font-size: 2rem; color: #ccc; margin-bottom: 3rem; font-weight: 300;">
+                            Mars Adaptive Defense System
+                        </h2>
+
+                        <div class="solution-showcase">
+                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🧠 PREDICTIVE AI</h3>
+                            <p>Learns Mars patterns, predicts threats 48 hours before impact</p>
+                        </div>
+
+                        <div class="solution-showcase">
+                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🛡️ MAGNETIC SHIELDING</h3>
+                            <p>Electromagnetic deflection field powered by superconducting coils</p>
+                        </div>
+
+                        <div class="solution-showcase">
+                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🤖 AUTONOMOUS FLEET</h3>
+                            <p>Self-coordinating robots handle all maintenance and cleaning</p>
+                        </div>
+                    </div>
+
+                    <div class="hologram-container">
+                        <div class="hologram-shield">
+                            <div class="habitat-core"></div>
+                            <div class="radiation-beam" style="animation-delay: 0s;"></div>
+                            <div class="radiation-beam" style="animation-delay: 1s;"></div>
+                            <div class="radiation-beam" style="animation-delay: 2s;"></div>
+                            <div class="radiation-beam" style="animation-delay: 3s;"></div>
+                            <div class="radiation-beam" style="animation-delay: 4s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scene scene-3">
+            <div class="content-viewport">
+                <h1 style="font-family: 'Orbitron', monospace; font-size: 3.5rem; text-align: center; color: #ff6b35; margin-bottom: 4rem;">
+                    ENGINEERING THE IMPOSSIBLE
+                </h1>
+
+                <div class="content-split">
+                    <div class="data-panel">
+                        <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 2rem;">⚡ MAGNETIC FIELD GENERATOR</h3>
+                        <div style="font-family: 'Orbitron', monospace; font-size: 0.9rem; line-height: 2;">
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                                <span>SUPERCONDUCTOR TYPE:</span>
+                                <span style="color: #00ff87;">YBCO</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                                <span>OPERATING TEMP:</span>
+                                <span style="color: #00ff87;">77K</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                                <span>FIELD STRENGTH:</span>
+                                <span style="color: #00ff87;">1.0 TESLA</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                                <span>PROTECTION RADIUS:</span>
+                                <span style="color: #00ff87;">100M</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                                <span>POWER SOURCE:</span>
+                                <span style="color: #00ff87;">10kW NUCLEAR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-panel">
+                        <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 2rem;">🤖 AUTONOMOUS MAINTENANCE</h3>
+                        <div style="margin: 2rem 0;">
+                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
+                                <h4 style="color: #00ff87;">Surface Cleaning Units</h4>
+                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Electrostatic dust removal systems</p>
+                            </div>
+                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
+                                <h4 style="color: #00ff87;">Air Filtration Drones</h4>
+                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Mobile atmospheric purification</p>
+                            </div>
+                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
+                                <h4 style="color: #00ff87;">Repair & Inspection</h4>
+                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Predictive maintenance AI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="scene scene-4">
             <div class="content-viewport">
                 <h1 style="font-family: 'Orbitron', monospace; font-size: 3.5rem; text-align: center; color: #00ff87; margin-bottom: 3rem;">
                     MISSION CONTROL
                 </h1>
-                
+
                 <div class="content-split">
                     <div class="control-interface">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; border-bottom: 1px solid #00ff87; padding-bottom: 1rem;">
                             <h3 style="color: #00ff87;">RADS-M CONTROL CENTER</h3>
                             <div style="color: #666; font-size: 0.9rem;">SOL 1,247 | 14:32 MLT</div>
                         </div>
-                        
+
                         <div class="status-grid">
                             <div class="status-item">
                                 <div style="display: flex; align-items: center;">
@@ -681,7 +774,7 @@
                                 </div>
                                 <span style="color: #00ff87; font-weight: bold;">87% ACTIVE</span>
                             </div>
-                            
+
                             <div class="status-item">
                                 <div style="display: flex; align-items: center;">
                                     <div class="status-dot status-warning"></div>
@@ -689,7 +782,7 @@
                                 </div>
                                 <span style="color: #ffa500; font-weight: bold;">23 HOURS</span>
                             </div>
-                            
+
                             <div class="status-item">
                                 <div style="display: flex; align-items: center;">
                                     <div class="status-dot status-ok"></div>
@@ -697,7 +790,7 @@
                                 </div>
                                 <span style="color: #00ff87; font-weight: bold;">15/16 ONLINE</span>
                             </div>
-                            
+
                             <div class="status-item">
                                 <div style="display: flex; align-items: center;">
                                     <div class="status-dot status-critical"></div>
@@ -706,7 +799,7 @@
                                 <span style="color: #ff4757; font-weight: bold;">8 HOURS</span>
                             </div>
                         </div>
-                        
+
                         <div style="background: rgba(255,107,53,0.1); border-radius: 10px; padding: 2rem; margin-top: 2rem; border: 1px solid #ff6b35;">
                             <h4 style="color: #ff6b35; margin-bottom: 1rem;">🚨 AUTOMATED RESPONSE SEQUENCE</h4>
                             <div style="font-family: 'Orbitron', monospace; font-size: 0.9rem; line-height: 1.8;">
@@ -717,7 +810,7 @@
                                 <div style="color: #ffa500;">⏳ Estimated completion: 1.7 hours</div>
                             </div>
                         </div>
-                        
+
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-top: 2rem; font-family: 'Orbitron', monospace; font-size: 0.8rem;">
                             <div>
                                 <div style="color: #666;">RADIATION LEVEL</div>
@@ -733,21 +826,21 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div>
                         <div class="data-panel">
                             <h3 style="color: #ff6b35; margin-bottom: 2rem; font-family: 'Orbitron', monospace;">🛠️ TECHNOLOGY STACK</h3>
-                            
+
                             <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(0,255,135,0.05); border-radius: 10px; border-left: 4px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">AI & Machine Learning</h4>
                                 <p style="color: #ccc; line-height: 1.6;">TensorFlow neural networks • Predictive algorithms • Real-time pattern recognition • Mars-specific learning models</p>
                             </div>
-                            
+
                             <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255,107,53,0.05); border-radius: 10px; border-left: 4px solid #ff6b35;">
                                 <h4 style="color: #ff6b35; margin-bottom: 1rem;">Cybersecurity</h4>
                                 <p style="color: #ccc; line-height: 1.6;">Zero-trust architecture • Quantum-resistant encryption • Autonomous threat detection • Secure mesh networking</p>
                             </div>
-                            
+
                             <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(0,255,135,0.05); border-radius: 10px; border-left: 4px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">IoT Network</h4>
                                 <p style="color: #ccc; line-height: 1.6;">200+ environmental sensors • LoRaWAN mesh communication • Edge computing • Real-time data processing</p>
@@ -758,7 +851,6 @@
             </div>
         </div>
 
-        <!-- Scene 5: Impact Statistics -->
         <div class="scene scene-5">
             <div class="content-viewport">
                 <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; text-align: center; color: #ff6b35; margin-bottom: 2rem;">
@@ -767,24 +859,24 @@
                 <div style="text-align: center; color: #ccc; font-size: 1.5rem; margin-bottom: 4rem;">
                     How RADS-M Changes Everything
                 </div>
-                
+
                 <div class="stats-constellation">
                     <div class="stat-orb">
                         <div class="stat-number">87%</div>
                         <div class="stat-label">RADIATION<br>REDUCTION</div>
                     </div>
-                    
+
                     <div class="stat-orb">
                         <div class="stat-number">94%</div>
                         <div class="stat-label">EQUIPMENT<br>UPTIME</div>
                     </div>
-                    
+
                     <div class="stat-orb">
                         <div class="stat-number">$73M</div>
                         <div class="stat-label">MISSION<br>SAVINGS</div>
                     </div>
                 </div>
-                
+
                 <div class="content-split" style="margin-top: 4rem;">
                     <div class="data-panel">
                         <h3 style="color: #ff4757; margin-bottom: 2rem; text-align: center;">❌ CURRENT MARS APPROACH</h3>
@@ -806,7 +898,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="data-panel">
                         <h3 style="color: #00ff87; margin-bottom: 2rem; text-align: center;">✅ RADS-M INNOVATION</h3>
                         <div style="space-y: 1rem;">
@@ -831,7 +923,6 @@
             </div>
         </div>
 
-        <!-- Scene 6: Final Call to Action -->
         <div class="scene scene-6">
             <div class="content-viewport">
                 <div style="text-align: center;">
@@ -841,41 +932,41 @@
                     <div class="subtitle-glow" style="margin-bottom: 4rem;">
                         Of Human Civilization on Mars
                     </div>
-                    
+
                     <div class="data-panel" style="max-width: 800px; margin: 0 auto;">
                         <h2 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 2rem; font-size: 2.5rem;">
                             🌟 WHY RADS-M WINS
                         </h2>
-                        
+
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 3rem 0;">
                             <div style="padding: 2rem; background: rgba(0,255,135,0.1); border-radius: 15px; border: 1px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">✅ CREATIVITY & INNOVATION</h4>
                                 <p>First intelligent adaptive protection system combining AI prediction with active magnetic shielding</p>
                             </div>
-                            
+
                             <div style="padding: 2rem; background: rgba(0,255,135,0.1); border-radius: 15px; border: 1px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">✅ FEASIBILITY</h4>
                                 <p>Built on proven NASA magnetic shielding research and existing technology</p>
                             </div>
-                            
+
                             <div style="padding: 2rem; background: rgba(0,255,135,0.1); border-radius: 15px; border: 1px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">✅ TECHNOLOGY APPLICATION</h4>
                                 <p>Perfect integration of AI, cybersecurity, IoT, and aerospace systems</p>
                             </div>
-                            
+
                             <div style="padding: 2rem; background: rgba(0,255,135,0.1); border-radius: 15px; border: 1px solid #00ff87;">
                                 <h4 style="color: #00ff87; margin-bottom: 1rem;">✅ CLEAR PRESENTATION</h4>
                                 <p>Dramatic visuals, quantifiable benefits, compelling mission impact</p>
                             </div>
                         </div>
-                        
+
                         <div style="background: linear-gradient(45deg, rgba(255,107,53,0.2), rgba(0,255,135,0.2)); border-radius: 20px; padding: 3rem; margin: 3rem 0; border: 2px solid #ff6b35;">
                             <h2 style="font-size: 3rem; margin-bottom: 2rem; font-family: 'Orbitron', monospace;">🚀 THE BOTTOM LINE</h2>
                             <p style="font-size: 2rem; margin-bottom: 2rem; font-weight: 300; line-height: 1.4;">
                                 "RADS-M doesn't just protect Mars colonists —<br>
                                 <strong style="color: #ff6b35;">it makes permanent Mars settlement economically viable for the first time."</strong>
                             </p>
-                            
+
                             <div style="margin: 3rem 0; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; font-size: 1.2rem;">
                                 <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 10px;">
                                     <strong style="color: #00ff87;">🎯 Addresses Mars's #1 threat:</strong> Radiation exposure that kills humans
@@ -893,7 +984,7 @@
                                     <strong style="color: #00ff87;">🌟 Mission enabler:</strong> Makes Mars colonization actually possible
                                 </div>
                             </div>
-                            
+
                             <button style="
                                 background: linear-gradient(45deg, #ff6b35, #00ff87);
                                 border: none;
@@ -917,12 +1008,12 @@
             </div>
         </div>
     </div>
-    
+
     <div class="nav-control">
         <button class="nav-button" onclick="prevScene()">← PREVIOUS</button>
         <button class="nav-button" onclick="nextScene()">NEXT →</button>
     </div>
-    
+
     <div class="audio-visualizer">
         <div class="audio-bar"></div>
         <div class="audio-bar"></div>
@@ -962,7 +1053,7 @@
             particle.style.animationDelay = Math.random() * 15 + 's';
             particle.style.animationDuration = (15 + Math.random() * 10) + 's';
             document.querySelector('.particle-field').appendChild(particle);
-            
+
             setTimeout(() => {
                 particle.remove();
             }, 25000);
@@ -970,7 +1061,7 @@
 
         // Create particles periodically
         setInterval(createParticle, 2000);
-        
+
         // Initialize with some particles
         for (let i = 0; i < 10; i++) {
             setTimeout(createParticle, i * 500);
@@ -988,9 +1079,9 @@
                     scene.classList.add('exit');
                 }
             });
-            
+
             currentScene = (n + totalScenes) % totalScenes;
-            
+
             setTimeout(() => {
                 scenes[currentScene].classList.add('active');
                 updateProgress();
@@ -1018,21 +1109,40 @@
             }
         });
 
+        // SCROLL NAVIGATION ADDED
+        let isScrolling = false;
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            isScrolling = true;
+
+            if (e.deltaY > 0) {
+                nextScene();
+            } else if (e.deltaY < 0) {
+                prevScene();
+            }
+
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000);
+        });
+        // END SCROLL NAVIGATION ADDED
+
         // Audio feedback
         function playTransitionSound() {
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
-                
+
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
-                
+
                 oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
                 oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.1);
                 gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
                 gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.3);
-                
+
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 0.3);
             } catch(e) {
@@ -1044,15 +1154,15 @@
             playTransitionSound();
             const button = event.target;
             const originalText = button.textContent;
-            
+
             button.style.background = 'linear-gradient(45deg, #00ff87, #ff6b35)';
             button.textContent = '🚀 MISSION ACCEPTED';
-            
+
             setTimeout(() => {
                 button.textContent = '✅ READY TO SAVE MARS';
                 button.style.background = 'linear-gradient(45deg, #00ff87, #00ff87)';
             }, 1000);
-            
+
             setTimeout(() => {
                 button.textContent = originalText;
                 button.style.background = 'linear-gradient(45deg, #ff6b35, #00ff87)';
@@ -1068,7 +1178,7 @@
 
         // Initialize
         updateProgress();
-        
+
         // Dynamic status updates simulation
         setInterval(() => {
             const statusDots = document.querySelectorAll('.status-dot');
@@ -1107,100 +1217,3 @@
     </script>
 </body>
 </html>
-
-        <!-- Scene 2: The Solution Reveal -->
-        <div class="scene scene-2">
-            <div class="content-viewport">
-                <div class="content-split">
-                    <div>
-                        <h1 style="font-family: 'Orbitron', monospace; font-size: 4rem; color: #00ff87; margin-bottom: 2rem;">
-                            RADS-M
-                        </h1>
-                        <h2 style="font-size: 2rem; color: #ccc; margin-bottom: 3rem; font-weight: 300;">
-                            Mars Adaptive Defense System
-                        </h2>
-                        
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🧠 PREDICTIVE AI</h3>
-                            <p>Learns Mars patterns, predicts threats 48 hours before impact</p>
-                        </div>
-                        
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🛡️ MAGNETIC SHIELDING</h3>
-                            <p>Electromagnetic deflection field powered by superconducting coils</p>
-                        </div>
-                        
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem;">🤖 AUTONOMOUS FLEET</h3>
-                            <p>Self-coordinating robots handle all maintenance and cleaning</p>
-                        </div>
-                    </div>
-                    
-                    <div class="hologram-container">
-                        <div class="hologram-shield">
-                            <div class="habitat-core"></div>
-                            <div class="radiation-beam" style="animation-delay: 0s;"></div>
-                            <div class="radiation-beam" style="animation-delay: 1s;"></div>
-                            <div class="radiation-beam" style="animation-delay: 2s;"></div>
-                            <div class="radiation-beam" style="animation-delay: 3s;"></div>
-                            <div class="radiation-beam" style="animation-delay: 4s;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Scene 3: Technical Deep Dive -->
-        <div class="scene scene-3">
-            <div class="content-viewport">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: 3.5rem; text-align: center; color: #ff6b35; margin-bottom: 4rem;">
-                    ENGINEERING THE IMPOSSIBLE
-                </h1>
-                
-                <div class="content-split">
-                    <div class="data-panel">
-                        <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 2rem;">⚡ MAGNETIC FIELD GENERATOR</h3>
-                        <div style="font-family: 'Orbitron', monospace; font-size: 0.9rem; line-height: 2;">
-                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>SUPERCONDUCTOR TYPE:</span>
-                                <span style="color: #00ff87;">YBCO</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>OPERATING TEMP:</span>
-                                <span style="color: #00ff87;">77K</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>FIELD STRENGTH:</span>
-                                <span style="color: #00ff87;">1.0 TESLA</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>PROTECTION RADIUS:</span>
-                                <span style="color: #00ff87;">100M</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>POWER SOURCE:</span>
-                                <span style="color: #00ff87;">10kW NUCLEAR</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="data-panel">
-                        <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 2rem;">🤖 AUTONOMOUS MAINTENANCE</h3>
-                        <div style="margin: 2rem 0;">
-                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
-                                <h4 style="color: #00ff87;">Surface Cleaning Units</h4>
-                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Electrostatic dust removal systems</p>
-                            </div>
-                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
-                                <h4 style="color: #00ff87;">Air Filtration Drones</h4>
-                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Mobile atmospheric purification</p>
-                            </div>
-                            <div style="background: rgba(0,255,135,0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid #00ff87;">
-                                <h4 style="color: #00ff87;">Repair & Inspection</h4>
-                                <p style="font-size: 0.9rem; color: #ccc; margin-top: 0.5rem;">Predictive maintenance AI</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
