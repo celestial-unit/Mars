@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,89 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RADS-M: Mars Colony Protection Protocol</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --mars-red: #cd5c23;
+            --mars-dark: #8b3a1a;
+            --tech-blue: #00a3ff;
+            --success-green: #00d4aa;
+            --warning-orange: #ff8c42;
+            --error-red: #ff4757;
+            --text-primary: #ffffff;
+            --text-secondary: #b8bcc8;
+            --text-tertiary: #6c7293;
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0f;
+            --bg-card: rgba(15, 15, 20, 0.9);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --border-accent: rgba(205, 92, 35, 0.5);
+        }
+
         body {
-            font-family: 'Exo 2', sans-serif;
-            background: #000;
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow: hidden;
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
         }
-        /* Custom Cursor - Hidden on touch devices */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ff6b35;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
-            display: none;
-        }
-        @media (hover: hover) and (pointer: fine) {
-            body {
-                cursor: none;
-            }
-            .cursor {
-                display: block;
-            }
-        }
-        .cursor.clicked {
-            transform: scale(1.5);
-            border-color: #00ff87;
-        }
-        /* Cinematic Overlay */
-        .cinematic-bars {
-            position: fixed;
-            width: 100%;
-            height: 40px;
-            background: #000;
-            z-index: 9999;
-        }
-        .cinematic-bars.top {
-            top: 0;
-            background: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.9) 70%, transparent 100%);
-        }
-        .cinematic-bars.bottom {
-            bottom: 0;
-            background: linear-gradient(to top, #000 0%, rgba(0,0,0,0.9) 70%, transparent 100%);
-        }
-        @media (max-width: 768px) {
-            .cinematic-bars {
-                height: 20px;
-            }
-        }
-        /* Main Container */
-        .experience-container {
+
+        .presentation-container {
             position: relative;
             width: 100vw;
             height: 100vh;
             overflow: hidden;
         }
-        .scene {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transform: translateX(100px);
-            background-size: cover;
-            background-position: center;
-        }
-        .scene.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .scene.exit {
-            transform: translateX(-100px);
-            opacity: 0;
-        }
+
         /* Background Effects */
         .mars-atmosphere {
             position: absolute;
@@ -97,459 +53,384 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(205, 92, 35, 0.2) 0%, transparent 60%),
-                radial-gradient(circle at 50% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 80%);
-            animation: atmosphericShift 20s ease-in-out infinite;
+                radial-gradient(circle at 15% 25%, rgba(205, 92, 35, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(139, 58, 26, 0.1) 0%, transparent 60%),
+                linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            animation: atmosphericDrift 30s ease-in-out infinite;
         }
-        @keyframes atmosphericShift {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            33% { transform: rotate(1deg) scale(1.02); }
-            66% { transform: rotate(-1deg) scale(0.98); }
+
+        @keyframes atmosphericDrift {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            33% { transform: scale(1.02) rotate(0.5deg); opacity: 0.9; }
+            66% { transform: scale(0.98) rotate(-0.5deg); opacity: 0.85; }
         }
-        .particle-field {
+
+        /* Scene Management */
+        .scene {
             position: absolute;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #ff6b35;
-            border-radius: 50%;
-            animation: drift 15s linear infinite;
-            opacity: 0.7;
-        }
-        @keyframes drift {
-            0% { transform: translateX(-100px) translateY(100vh); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateX(100px) translateY(-100px); opacity: 0; }
-        }
-        /* Typography */
-        .title-massive {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(2.5rem, 10vw, 8rem);
-            font-weight: 900;
-            text-align: center;
-            background: linear-gradient(45deg, #ff6b35, #00ff87, #ff6b35);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 4s ease-in-out infinite;
-            text-shadow: 0 0 50px rgba(255, 107, 53, 0.5);
-            letter-spacing: -0.05em;
-            line-height: 0.8;
-        }
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .subtitle-glow {
-            font-size: clamp(1rem, 4vw, 2rem);
-            text-align: center;
-            color: #ccc;
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            margin-top: 1rem;
-            animation: subtlePulse 3s ease-in-out infinite;
-        }
-        @keyframes subtlePulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        /* Content Containers */
-        .content-viewport {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 95%;
-            max-width: 1400px;
-            max-height: 90vh;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            overflow-y: auto;
-            padding: 1rem;
         }
-        .content-split {
+
+        .scene.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scene.exit {
+            transform: translateX(-50px);
+            opacity: 0;
+        }
+
+        /* Layout Components */
+        .scene-content {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            width: 100%;
+            gap: 3rem;
             align-items: center;
         }
+
+        .content-single {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        .title-primary {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--mars-red), var(--warning-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .title-secondary {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 2rem;
+        }
+
+        .body-large {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .mono-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-feature-settings: 'liga' 0;
+        }
+
         /* Cards and Panels */
-        .data-panel {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid rgba(255, 107, 53, 0.5);
-            border-radius: 20px;
-            padding: 1.5rem;
-            backdrop-filter: blur(15px);
-            box-shadow: 
-                0 0 50px rgba(255, 107, 53, 0.2),
-                inset 0 0 50px rgba(255, 107, 53, 0.05);
-            position: relative;
-            overflow: hidden;
-            transform: perspective(1000px) rotateY(2deg);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .data-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: scanLine 6s linear infinite;
-        }
-        @keyframes scanLine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        .threat-indicator {
-            background: rgba(139, 0, 0, 0.3);
-            border: 2px solid #ff4757;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+        .data-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
         }
-        .threat-indicator::after {
+
+        .data-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: #ff4757;
-            animation: dangerPulse 2s ease-in-out infinite;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
         }
-        @keyframes dangerPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-        .solution-showcase {
-            background: rgba(0, 139, 34, 0.2);
-            border: 2px solid #00ff87;
-            border-radius: 15px;
+
+        .threat-card {
+            background: rgba(139, 0, 0, 0.1);
+            border: 1px solid var(--error-red);
+            border-radius: 12px;
             padding: 1.5rem;
             margin: 1.5rem 0;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 255, 135, 0.2);
         }
-        /* Statistics Display */
-        .stats-constellation {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .stat-orb {
-            position: relative;
-            text-align: center;
+
+        .solution-card {
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid var(--success-green);
+            border-radius: 12px;
             padding: 1.5rem;
-            flex: 1;
-            min-width: 150px;
+            margin: 1rem 0;
         }
-        .stat-orb::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border: 3px solid #00ff87;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 135, 0.1) 0%, transparent 70%);
-            animation: orbPulse 4s ease-in-out infinite;
+
+        /* Image Containers */
+        .concept-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: var(--bg-secondary);
+            display: block;
         }
-        @keyframes orbPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-        }
-        .stat-number {
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            font-weight: 900;
-            color: #00ff87;
-            text-shadow: 0 0 30px #00ff87;
-            position: relative;
-            z-index: 2;
-        }
-        .stat-label {
-            font-size: clamp(0.7rem, 2vw, 1rem);
-            color: #ccc;
-            margin-top: 0.5rem;
-            position: relative;
-            z-index: 2;
-        }
-        /* Navigation */
-        .nav-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--bg-secondary), rgba(205, 92, 35, 0.1));
+            border: 2px dashed var(--border-accent);
+            border-radius: 12px;
             display: flex;
-            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
         }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .stat-value {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--success-green);
+            margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Technical Specs */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid var(--tech-blue);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        .spec-label {
+            color: var(--text-secondary);
+        }
+
+        .spec-value {
+            color: var(--success-green);
+            font-weight: 600;
+        }
+
+        /* Feature Lists */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            padding: 1.2rem;
+            background: rgba(0, 163, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--tech-blue);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--tech-blue);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .feature-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
         .nav-button {
             background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff6b35;
-            color: #ff6b35;
-            padding: 8px 16px;
-            border-radius: 50px;
+            border: 1px solid var(--border-accent);
+            color: var(--mars-red);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
             cursor: pointer;
-            font-family: 'Orbitron', monospace;
-            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             text-transform: uppercase;
-            font-size: 0.7rem;
+            letter-spacing: 0.5px;
         }
+
         .nav-button:hover {
-            background: rgba(255, 107, 53, 0.2);
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
-            transform: translateY(-2px);
+            background: rgba(205, 92, 35, 0.1);
+            border-color: var(--mars-red);
+            transform: translateY(-1px);
         }
-        /* Scene Progress Indicator */
-        .progress-arc {
+
+        /* Progress Indicator */
+        .progress-indicator {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
+            top: 2rem;
+            left: 2rem;
             z-index: 1000;
         }
-        .progress-circle {
-            transform: rotate(-90deg);
-        }
-        .progress-background {
-            fill: none;
-            stroke: rgba(255, 107, 53, 0.2);
-            stroke-width: 3;
-        }
+
         .progress-bar {
-            fill: none;
-            stroke: #ff6b35;
-            stroke-width: 3;
-            stroke-linecap: round;
-            transition: stroke-dashoffset 0.5s ease;
-        }
-        /* Scene Specific Styles */
-        .scene-1 {
-            background-image: 
-                linear-gradient(rgba(139, 0, 0, 0.4), rgba(0, 0, 0, 0.8)),
-                radial-gradient(circle at center, #cd5c23 20%, #a0522d 60%, #8b4513 100%);
-        }
-        .scene-2, .scene-3, .scene-4, .scene-7 {
-            background: 
-                radial-gradient(circle at 30% 40%, rgba(0, 255, 135, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-        }
-        .scene-5, .scene-6 {
-            background: 
-                radial-gradient(circle at center, rgba(255, 107, 53, 0.2) 0%, transparent 50%),
-                linear-gradient(135deg, #0a0a0a 0%, #2d1b1b 50%, #1a0f0f 100%);
-        }
-        /* Audio visualizer */
-        .audio-visualizer {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 3px;
-        }
-        .audio-bar {
-            width: 3px;
-            background: #ff6b35;
-            border-radius: 2px;
-            animation: audioWave 1s ease-in-out infinite;
-        }
-        @keyframes audioWave {
-            0%, 100% { height: 15px; }
-            50% { height: 35px; }
-        }
-        .audio-bar:nth-child(2) { animation-delay: 0.1s; }
-        .audio-bar:nth-child(3) { animation-delay: 0.2s; }
-        .audio-bar:nth-child(4) { animation-delay: 0.3s; }
-        .audio-bar:nth-child(5) { animation-delay: 0.4s; }
-        /* Energy Visualization */
-        .energy-chart {
-            width: 100%;
-            height: 200px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            margin: 1rem 0;
-            position: relative;
+            width: 200px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1px;
             overflow: hidden;
         }
-        .energy-axis {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: #333;
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--mars-red), var(--warning-orange));
+            width: 0;
+            transition: width 0.5s ease;
         }
-        .energy-bar {
-            position: absolute;
-            bottom: 0;
-            width: 60px;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .energy-label {
-            position: absolute;
-            bottom: -25px;
-            font-size: 0.8rem;
-            text-align: center;
-            width: 80px;
-            left: 0;
-            color: #ccc;
-        }
-        .energy-value {
-            position: absolute;
-            top: -20px;
+
+        .progress-text {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
-            text-align: center;
-            width: 80px;
-            left: 0;
-            color: #00ff87;
-            font-family: 'Orbitron', monospace;
-            font-weight: bold;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
         }
-        .energy-scale {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 0.7rem;
-            color: #666;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-        .ai-optimization {
-            display: flex;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        .optimization-card {
-            flex: 1;
-            min-width: 200px;
-            background: rgba(0, 255, 135, 0.1);
-            border-left: 3px solid #00ff87;
-            padding: 1rem;
+
+        /* Call to Action */
+        .cta-button {
+            background: linear-gradient(135deg, var(--mars-red), var(--warning-orange));
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
             border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
         }
-        .optimization-header {
-            color: #00ff87;
-            font-family: 'Orbitron', monospace;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(205, 92, 35, 0.4);
         }
-        .practical-example {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #ff6b35;
-            border-radius: 10px;
-            padding: 1.2rem;
-            margin: 1.5rem 0;
-        }
-        .example-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 0.5rem 0;
-            font-size: clamp(0.7rem, 2vw, 0.9rem);
-        }
-        .example-label {
-            color: #ccc;
-        }
-        .example-value {
-            color: #00ff87;
-            font-family: 'Orbitron', monospace;
-            font-weight: bold;
-        }
-        /* Mobile Responsive Design */
-        @media (max-width: 768px) {
-            .content-split {
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            .content-viewport {
-                width: 98%;
-                max-height: 95vh;
-                padding: 0.5rem;
-            }
-            .data-panel {
-                padding: 1rem;
-                transform: none;
-            }
-            .threat-indicator, .solution-showcase {
-                padding: 1rem;
-                margin: 1rem 0;
-            }
-            .stats-constellation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .stat-orb {
-                min-width: auto;
-                width: 100%;
-            }
-            .stat-orb::before {
-                width: 100px;
-                height: 100px;
-            }
-            .nav-control {
-                bottom: 10px;
-                right: 10px;
-                flex-direction: column;
-            }
-            .nav-button {
-                padding: 6px 12px;
-                font-size: 0.6rem;
-            }
-            .progress-arc {
-                width: 40px;
-                height: 40px;
-            }
-            .audio-visualizer {
-                bottom: 60px;
-            }
-            .energy-chart {
-                height: 150px;
-            }
-            .ai-optimization {
-                flex-direction: column;
+                gap: 2rem;
             }
         }
-        /* Touch device optimizations */
-        @media (hover: none) {
-            .data-panel:hover {
-                transform: perspective(1000px) rotateY(2deg);
+
+        @media (max-width: 768px) {
+            .scene-content {
+                padding: 1rem;
             }
-            .nav-button:hover {
-                background: rgba(0, 0, 0, 0.8);
-                box-shadow: none;
-                transform: none;
+
+            .data-card {
+                padding: 1.5rem;
+            }
+
+            .nav-controls {
+                bottom: 1rem;
+                right: 1rem;
+                flex-direction: column;
+            }
+
+            .progress-indicator {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .progress-bar {
+                width: 150px;
             }
         }
+
+        /* Animation Utilities */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Accessibility */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -561,331 +442,295 @@
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cinematic-bars top"></div>
-    <div class="cinematic-bars bottom"></div>
-    <div class="progress-arc">
-        <svg class="progress-circle" width="50" height="50">
-            <circle class="progress-background" cx="25" cy="25" r="20"></circle>
-            <circle class="progress-bar" cx="25" cy="25" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"></circle>
-        </svg>
-    </div>
-    <div class="experience-container">
+    <div class="presentation-container">
         <div class="mars-atmosphere"></div>
-        <div class="particle-field"></div>
-        <!-- Scene 1: The Crisis -->
-        <div class="scene scene-1 active">
-            <div class="content-viewport">
-                <div class="title-massive">MARS</div>
-                <div class="subtitle-glow">THE RED PLANET WANTS YOU DEAD</div>
-                <div style="margin-top: 2rem; text-align: center; width: 100%; max-width: 600px;">
-                    <div class="threat-indicator">
-                        <h2 style="color: #ff4757; font-family: 'Orbitron', monospace; margin-bottom: 1rem; font-size: clamp(1rem, 4vw, 1.5rem);">⚠️ CRITICAL THREAT ANALYSIS</h2>
-                        <p style="font-size: clamp(0.9rem, 3vw, 1.2rem); line-height: 1.5;">
-                            <strong>700x HIGHER RADIATION</strong> than Earth<br>
-                            <strong>TOXIC DUST STORMS</strong> cover the entire planet<br>
-                            <strong>NO MAGNETIC FIELD</strong> to protect human life
-                        </p>
+        
+        <!-- Progress Indicator -->
+        <div class="progress-indicator">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text mono-text">SCENE <span id="current-scene">1</span> OF <span id="total-scenes">6</span></div>
+        </div>
+
+        <!-- Scene 1: Problem Statement -->
+        <div class="scene active" id="scene-1">
+            <div class="scene-content content-single">
+                <h1 class="title-primary">MARS</h1>
+                <p class="subtitle">The greatest engineering challenge humanity has ever faced</p>
+                
+                <div class="threat-card">
+                    <h3 style="color: var(--error-red); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Critical Threat Analysis</h3>
+                    <div class="body-large">
+                        <p><strong>700× higher radiation</strong> exposure than Earth</p>
+                        <p><strong>Toxic dust storms</strong> spanning entire planet</p>
+                        <p><strong>No magnetic field</strong> protection from cosmic rays</p>
+                        <p><strong>Current solutions:</strong> Inadequate for long-term habitation</p>
                     </div>
                 </div>
-                <div style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); color: #666; font-size: clamp(0.8rem, 2.5vw, 1rem); text-align: center; width: 90%;">
-                    Current Mars protection systems: <strong style="color: #ff4757;">INSUFFICIENT</strong>
-                </div>
-            </div>
-        </div>
-        <!-- Scene 2: The Solution Reveal -->
-        <div class="scene scene-2">
-            <div class="content-viewport">
-                <div class="content-split">
+
+                <div class="image-placeholder">
                     <div>
-                        <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(2rem, 6vw, 4rem); color: #00ff87; margin-bottom: 1rem;">
-                            RADS-M
-                        </h1>
-                        <h2 style="font-size: clamp(1rem, 4vw, 2rem); color: #ccc; margin-bottom: 2rem; font-weight: 300;">
-                            Mars Adaptive Defense System
-                        </h2>
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem; font-size: clamp(0.9rem, 3vw, 1.1rem);">🧠 PREDICTIVE AI</h3>
-                            <p style="font-size: clamp(0.8rem, 2.5vw, 0.95rem);">Learns Mars patterns, predicts threats 48 hours before impact</p>
+                        <strong>Mars Surface Hazards</strong><br>
+                        <em>Place mars-surface.jpg here</em><br>
+                        (Dust storm, radiation visualization)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 2: Solution Introduction -->
+        <div class="scene" id="scene-2">
+            <div class="scene-content">
+                <div class="content-grid">
+                    <div>
+                        <h1 class="title-secondary">RADS-M</h1>
+                        <p class="subtitle">Radiation Adaptive Defense System - Mars</p>
+                        
+                        <div class="solution-card">
+                            <h4 class="feature-title">Predictive AI Core</h4>
+                            <p class="feature-description">Neural networks analyze solar wind data to predict radiation events 48+ hours in advance</p>
                         </div>
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem; font-size: clamp(0.9rem, 3vw, 1.1rem);">🛡️ MAGNETIC SHIELDING</h3>
-                            <p style="font-size: clamp(0.8rem, 2.5vw, 0.95rem);">Electromagnetic deflection field powered by superconducting coils</p>
+                        
+                        <div class="solution-card">
+                            <h4 class="feature-title">Magnetic Shielding Array</h4>
+                            <p class="feature-description">Superconducting coils generate targeted electromagnetic fields to deflect harmful particles</p>
                         </div>
-                        <div class="solution-showcase">
-                            <h3 style="color: #00ff87; margin-bottom: 1rem; font-size: clamp(0.9rem, 3vw, 1.1rem);">🤖 AUTONOMOUS FLEET</h3>
-                            <p style="font-size: clamp(0.8rem, 2.5vw, 0.95rem);">Self-coordinating robots handle all maintenance and cleaning</p>
+                        
+                        <div class="solution-card">
+                            <h4 class="feature-title">Autonomous Maintenance</h4>
+                            <p class="feature-description">Self-coordinating robotic fleet handles system upkeep without human intervention</p>
                         </div>
                     </div>
-                    <div class="mars-habitat-diagram">
-                        <div style="background: rgba(0,0,0,0.8); border-radius: 15px; padding: 1.5rem; border: 2px solid #ff6b35;">
-                            <h3 style="color: #ff6b35; margin-bottom: 1rem; font-family: 'Orbitron', monospace; text-align: center; font-size: clamp(0.9rem, 3vw, 1.2rem);">MARS HABITAT PROTECTION</h3>
-                            <!-- Mars Habitat SVG Diagram -->
-                            <svg viewBox="0 0 800 400" style="width: 100%; height: auto; border-radius: 10px;">
-                                <!-- Mars Surface -->
-                                <rect x="0" y="280" width="800" height="120" fill="#cd5c23"/>
-                                <!-- Regolith particles -->
-                                <circle cx="50" cy="310" r="6" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="120" cy="305" r="4" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="200" cy="315" r="8" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="300" cy="300" r="5" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="450" cy="310" r="7" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="550" cy="305" r="4" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="650" cy="315" r="6" fill="#a0522d" opacity="0.7"/>
-                                <circle cx="720" cy="300" r="5" fill="#a0522d" opacity="0.7"/>
-                                <!-- Semi-buried Habitat -->
-                                <ellipse cx="250" cy="280" rx="100" ry="32" fill="#8b7355"/>
-                                <rect x="150" y="260" width="200" height="48" rx="24" fill="#d4af37"/>
-                                <rect x="160" y="270" width="180" height="28" rx="14" fill="#f4e99b"/>
-                                <rect x="170" y="275" width="8" height="18" fill="#666"/>
-                                <circle cx="174" cy="284" r="2" fill="#333"/>
-                                <!-- Regolith Layer -->
-                                <path d="M 150 260 Q 200 250 250 250 Q 300 250 350 260 L 350 280 L 150 280 Z" fill="#a0522d" opacity="0.8"/>
-                                <text x="250" y="245" text-anchor="middle" fill="#fff" font-size="10" font-family="Arial">1m regolith</text>
-                                <!-- Magnetic Coil Station -->
-                                <rect x="500" y="260" width="60" height="20" rx="4" fill="#666"/>
-                                <circle cx="530" cy="250" r="18" fill="none" stroke="#00ff87" stroke-width="2"/>
-                                <circle cx="530" cy="250" r="14" fill="none" stroke="#00ff87" stroke-width="1.5"/>
-                                <circle cx="530" cy="250" r="10" fill="none" stroke="#00ff87" stroke-width="1.5"/>
-                                <text x="530" y="295" text-anchor="middle" fill="#fff" font-size="9" font-family="Arial">Magnetic coil</text>
-                                <!-- SPE Shielding Bubble -->
-                                <ellipse cx="380" cy="200" rx="250" ry="120" fill="none" stroke="#00ff87" stroke-width="1.5" opacity="0.6" stroke-dasharray="4,4"/>
-                                <ellipse cx="380" cy="200" rx="230" ry="105" fill="rgba(0,255,135,0.05)"/>
-                                <text x="550" y="150" fill="#00ff87" font-size="11" font-family="Arial">SPE Shielding</text>
-                                <!-- Solar Wind and GCR Arrows -->
-                                <defs>
-                                    <marker id="arrowhead" markerWidth="8" markerHeight="6" 
-                                     refX="0" refY="3" orient="auto">
-                                        <polygon points="0 0, 8 3, 0 6" fill="#fff"/>
-                                    </marker>
-                                </defs>
-                                <!-- Solar Wind -->
-                                <line x1="50" y1="50" x2="150" y2="120" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <line x1="100" y1="30" x2="200" y2="100" stroke="#fff" stroke-width="2" marker-end="url(#arrowhead)"/>
-                                <text x="20" y="40" fill="#fff" font-size="12" font-family="Arial" font-weight="bold">Solar wind</text>
-                                <!-- GCRs -->
-                                <line x1="600" y1="20" x2="520" y2="90" stroke="#fff" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                <line x1="650" y1="40" x2="570" y2="110" stroke="#fff" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                <line x1="700" y1="10" x2="620" y2="80" stroke="#fff" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-                                <text x="650" y="25" fill="#fff" font-size="12" font-family="Arial" font-weight="bold">GCRs</text>
-                                <!-- Deflection visualization -->
-                                <path d="M 180 80 Q 300 95 400 70" stroke="#ff6b35" stroke-width="1.5" fill="none" opacity="0.8"/>
-                                <path d="M 220 70 Q 340 85 440 60" stroke="#ff6b35" stroke-width="1.5" fill="none" opacity="0.8"/>
-                                <path d="M 160 100 Q 280 115 380 90" stroke="#ff6b35" stroke-width="1.5" fill="none" opacity="0.8"/>
-                            </svg>
-                            <div style="margin-top: 1rem; text-align: center; font-size: clamp(0.7rem, 2vw, 0.9rem); color: #ccc;">
-                                <strong style="color: #00ff87;">Electromagnetic field deflects solar particles and cosmic rays</strong><br>
-                                while the habitat remains protected beneath Martian regolith
+                    
+                    <div>
+                        <div class="image-placeholder">
+                            <div>
+                                <strong>RADS-M System Architecture</strong><br>
+                                <em>Place system-overview.jpg here</em><br>
+                                (Habitat with magnetic field visualization)
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Scene 3: Technical Deep Dive -->
-        <div class="scene scene-3">
-            <div class="content-viewport">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(2rem, 6vw, 3rem); text-align: center; color: #ff6b35; margin-bottom: 2rem;">
-                    ENGINEERING THE IMPOSSIBLE
-                </h1>
-                <div class="content-split">
-                    <div class="data-panel">
-                        <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 1.5rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">⚡ MAGNETIC FIELD GENERATOR</h3>
-                        <div style="font-family: 'Orbitron', monospace; font-size: clamp(0.6rem, 2vw, 0.8rem); line-height: 2;">
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>SUPERCONDUCTOR:</span>
-                                <span style="color: #00ff87;">1.0 TESLA</span>
+
+        <!-- Scene 3: Technical Specifications -->
+        <div class="scene" id="scene-3">
+            <div class="scene-content">
+                <h2 class="title-secondary" style="text-align: center; margin-bottom: 2rem;">Technical Architecture</h2>
+                
+                <div class="content-grid">
+                    <div class="data-card">
+                        <h3 style="color: var(--tech-blue); margin-bottom: 1.5rem; font-weight: 600;">Magnetic Field Generator</h3>
+                        <div class="spec-grid">
+                            <div class="spec-item">
+                                <span class="spec-label">Field Strength:</span>
+                                <span class="spec-value">0.5-2.0 Tesla</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>PROTECTION RADIUS:</span>
-                                <span style="color: #00ff87;">100M</span>
+                            <div class="spec-item">
+                                <span class="spec-label">Protection Radius:</span>
+                                <span class="spec-value">100 meters</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>POWER SOURCE:</span>
-                                <span style="color: #00ff87;">10kW NUCLEAR</span>
+                            <div class="spec-item">
+                                <span class="spec-label">Power Source:</span>
+                                <span class="spec-value">100kW Nuclear</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>OPERATING TEMP:</span>
-                                <span style="color: #00ff87;">77K</span>
+                            <div class="spec-item">
+                                <span class="spec-label">Superconductor:</span>
+                                <span class="spec-value">YBCO at 77K</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>FIELD STRENGTH:</span>
-                                <span style="color: #00ff87;">1.0 TESLA</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                                <span>MATERIAL:</span>
-                                <span style="color: #00ff87;">YBCO</span>
+                            <div class="spec-item">
+                                <span class="spec-label">Energy Storage:</span>
+                                <span class="spec-value">1 MWh Hybrid</span>
                             </div>
                         </div>
                     </div>
-                    <div class="data-panel">
-                        <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.5rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">🤖 AUTONOMOUS MAINTENANCE</h3>
-                        <div style="margin: 1.5rem 0;">
-                            <div style="background: rgba(0,255,135,0.1); padding: 1rem; border-radius: 8px; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
-                                <h4 style="color: #00ff87; font-size: clamp(0.8rem, 2.5vw, 1rem);">Surface Cleaning Units</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.8rem); color: #ccc; margin-top: 0.3rem;">Electrostatic dust removal systems</p>
+                    
+                    <div class="data-card">
+                        <h3 style="color: var(--success-green); margin-bottom: 1.5rem; font-weight: 600;">AI Control System</h3>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <div class="feature-title">Solar Wind Prediction</div>
+                                <div class="feature-description">TensorFlow neural networks process real-time space weather data</div>
                             </div>
-                            <div style="background: rgba(0,255,135,0.1); padding: 1rem; border-radius: 8px; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
-                                <h4 style="color: #00ff87; font-size: clamp(0.8rem, 2.5vw, 1rem);">Air Filtration Drones</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.8rem); color: #ccc; margin-top: 0.3rem;">Mobile atmospheric purification</p>
+                            <div class="feature-item">
+                                <div class="feature-title">Energy Optimization</div>
+                                <div class="feature-description">Dynamic field strength adjustment based on threat level</div>
                             </div>
-                            <div style="background: rgba(0,255,135,0.1); padding: 1rem; border-radius: 8px; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
-                                <h4 style="color: #00ff87; font-size: clamp(0.8rem, 2.5vw, 1rem);">Repair & Inspection</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.8rem); color: #ccc; margin-top: 0.3rem;">Predictive maintenance AI</p>
+                            <div class="feature-item">
+                                <div class="feature-title">Fault Detection</div>
+                                <div class="feature-description">Predictive maintenance prevents system failures</div>
                             </div>
-                            <div style="background: rgba(0,255,135,0.1); padding: 1rem; border-radius: 8px; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
-                                <h4 style="color: #00ff87; font-size: clamp(0.8rem, 2.5vw, 1rem);">Power Management</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.8rem); color: #ccc; margin-top: 0.3rem;">Autonomous energy distribution</p>
+                            <div class="feature-item">
+                                <div class="feature-title">Autonomous Response</div>
+                                <div class="feature-description">Zero-latency threat response without human input</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <div class="image-placeholder">
+                        <div>
+                            <strong>System Components Diagram</strong><br>
+                            <em>Place technical-diagram.jpg here</em><br>
+                            (Detailed component breakdown with labels)
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Scene 4: AI Control Center -->
-        <div class="scene scene-4">
-            <div class="content-viewport">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(1.8rem, 6vw, 3rem); text-align: center; color: #00ff87; margin-bottom: 1.5rem;">
-                    MISSION CONTROL
-                </h1>
-                <div class="content-split">
-                    <div style="background: rgba(0, 0, 0, 0.95); border: 2px solid #00ff87; border-radius: 15px; padding: 1.5rem; font-family: 'Orbitron', monospace; position: relative;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #00ff87; padding-bottom: 0.8rem; flex-wrap: wrap; gap: 0.5rem;">
-                            <h3 style="color: #00ff87; font-size: clamp(0.8rem, 3vw, 1.1rem);">RADS-M CONTROL</h3>
-                            <div style="color: #666; font-size: clamp(0.6rem, 2vw, 0.8rem);">SOL 1,247 | 14:32</div>
+
+        <!-- Scene 4: Mission Control Interface -->
+        <div class="scene" id="scene-4">
+            <div class="scene-content">
+                <h2 class="title-secondary" style="text-align: center; margin-bottom: 2rem;">Mission Control Interface</h2>
+                
+                <div class="content-grid">
+                    <div class="data-card" style="background: rgba(0, 10, 20, 0.95);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem;">
+                            <h3 style="color: var(--success-green);">RADS-M Control Terminal</h3>
+                            <span class="mono-text" style="color: var(--text-tertiary); font-size: 0.8rem;">SOL 1,247 | 14:32 UTC</span>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1.5rem 0;">
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #00ff87; font-size: clamp(0.7rem, 2vw, 0.85rem);">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #00ff87; margin-right: 0.5rem; box-shadow: 0 0 10px #00ff87;"></div>
-                                    <span>SHIELD</span>
-                                </div>
-                                <span style="color: #00ff87; font-weight: bold;">87%</span>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="spec-item" style="border-left-color: var(--success-green);">
+                                <span class="spec-label">Shield Status:</span>
+                                <span class="spec-value">87% Active</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #ffa500; font-size: clamp(0.7rem, 2vw, 0.85rem);">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #ffa500; margin-right: 0.5rem; box-shadow: 0 0 10px #ffa500;"></div>
-                                    <span>STORM</span>
-                                </div>
-                                <span style="color: #ffa500; font-weight: bold;">23H</span>
+                            <div class="spec-item" style="border-left-color: var(--warning-orange);">
+                                <span class="spec-label">Storm ETA:</span>
+                                <span class="spec-value" style="color: var(--warning-orange);">23 Hours</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #00ff87; font-size: clamp(0.7rem, 2vw, 0.85rem);">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #00ff87; margin-right: 0.5rem; box-shadow: 0 0 10px #00ff87;"></div>
-                                    <span>ROBOTS</span>
-                                </div>
-                                <span style="color: #00ff87; font-weight: bold;">15/16</span>
+                            <div class="spec-item" style="border-left-color: var(--success-green);">
+                                <span class="spec-label">Robots Online:</span>
+                                <span class="spec-value">15/16</span>
                             </div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #ff4757; font-size: clamp(0.7rem, 2vw, 0.85rem);">
-                                <div style="display: flex; align-items: center;">
-                                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #ff4757; margin-right: 0.5rem; box-shadow: 0 0 10px #ff4757;"></div>
-                                    <span>DUST</span>
-                                </div>
-                                <span style="color: #ff4757; font-weight: bold;">8H</span>
+                            <div class="spec-item" style="border-left-color: var(--error-red);">
+                                <span class="spec-label">Dust Clearing:</span>
+                                <span class="spec-value" style="color: var(--error-red);">8 Hours</span>
                             </div>
                         </div>
-                        <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1.2rem; margin-top: 1.2rem; border: 1px solid #ff6b35;">
-                            <h4 style="color: #ff6b35; margin-bottom: 0.8rem; font-size: clamp(0.7rem, 2.5vw, 0.9rem);">🚨 AUTO RESPONSE</h4>
-                            <div style="font-size: clamp(0.6rem, 1.8vw, 0.75rem); line-height: 1.4;">
-                                <div>✓ Magnetic coils charging</div>
-                                <div>✓ Robots securing systems</div>
+                        
+                        <div style="background: rgba(255, 140, 66, 0.1); border: 1px solid var(--warning-orange); border-radius: 8px; padding: 1rem;">
+                            <h4 style="color: var(--warning-orange); margin-bottom: 0.8rem; font-size: 0.9rem;">Automated Response Protocol</h4>
+                            <div class="mono-text" style="font-size: 0.75rem; line-height: 1.4; color: var(--text-secondary);">
+                                <div>✓ Magnetic coils pre-charging</div>
+                                <div>✓ Robotic systems securing</div>
                                 <div>✓ Air filtration sealed</div>
                                 <div>✓ Solar arrays retracting</div>
-                                <div style="color: #ffa500;">⏳ Complete: 1.7 hours</div>
+                                <div style="color: var(--warning-orange);">⏳ Completion: 1.7 hours</div>
                             </div>
                         </div>
                     </div>
-                    <div class="data-panel">
-                        <h3 style="color: #ff6b35; margin-bottom: 1.2rem; font-family: 'Orbitron', monospace; font-size: clamp(0.9rem, 3vw, 1.2rem);">🛠️ TECH STACK</h3>
-                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,255,135,0.05); border-radius: 8px; border-left: 3px solid #00ff87;">
-                            <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">AI & ML</h4>
-                            <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">TensorFlow neural networks • Predictive algorithms • Real-time pattern recognition</p>
+                    
+                    <div>
+                        <div class="image-placeholder">
+                            <div>
+                                <strong>Control Interface Screenshot</strong><br>
+                                <em>Place control-interface.jpg here</em><br>
+                                (Mission control dashboard view)
+                            </div>
                         </div>
-                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(255,107,53,0.05); border-radius: 8px; border-left: 3px solid #ff6b35;">
-                            <h4 style="color: #ff6b35; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">Cybersecurity</h4>
-                            <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">Zero-trust architecture • Quantum-resistant encryption • Autonomous threat detection</p>
-                        </div>
-                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,255,135,0.05); border-radius: 8px; border-left: 3px solid #00ff87;">
-                            <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">IoT Network</h4>
-                            <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">200+ sensors • LoRaWAN mesh • Edge computing • Real-time processing</p>
-                        </div>
-                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,255,135,0.05); border-radius: 8px; border-left: 3px solid #00ff87;">
-                            <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">Data Processing</h4>
-                            <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">Federated learning • Cloud-edge hybrid • Terabyte/hour processing</p>
+                        
+                        <div class="data-card" style="margin-top: 1.5rem;">
+                            <h3 style="color: var(--mars-red); margin-bottom: 1rem; font-weight: 600;">Technology Stack</h3>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <div class="feature-title">Machine Learning</div>
+                                    <div class="feature-description">TensorFlow • PyTorch • Real-time inference</div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-title">Cybersecurity</div>
+                                    <div class="feature-description">Zero-trust • Quantum-resistant encryption</div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-title">IoT Network</div>
+                                    <div class="feature-description">200+ sensors • LoRaWAN mesh • Edge computing</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Scene 5: Impact Statistics -->
-        <div class="scene scene-5">
-            <div class="content-viewport">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(2rem, 6vw, 3.5rem); text-align: center; color: #ff6b35; margin-bottom: 1rem;">
-                    MISSION IMPACT
-                </h1>
-                <div style="text-align: center; color: #ccc; font-size: clamp(0.9rem, 3vw, 1.3rem); margin-bottom: 2rem;">
-                    How RADS-M Changes Everything
-                </div>
-                <div class="stats-constellation">
-                    <div class="stat-orb">
-                        <div class="stat-number">87%</div>
-                        <div class="stat-label">RADIATION<br>REDUCTION</div>
+
+        <!-- Scene 5: Impact Analysis -->
+        <div class="scene" id="scene-5">
+            <div class="scene-content content-single">
+                <h2 class="title-secondary">Mission Impact</h2>
+                <p class="subtitle">Quantifiable benefits for Mars colonization</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">87%</div>
+                        <div class="stat-label">Radiation Reduction</div>
                     </div>
-                    <div class="stat-orb">
-                        <div class="stat-number">94%</div>
-                        <div class="stat-label">EQUIPMENT<br>UPTIME</div>
+                    <div class="stat-item">
+                        <div class="stat-value">94%</div>
+                        <div class="stat-label">System Uptime</div>
                     </div>
-                    <div class="stat-orb">
-                        <div class="stat-number">$73M</div>
-                        <div class="stat-label">MISSION<br>SAVINGS</div>
+                    <div class="stat-item">
+                        <div class="stat-value">$73M</div>
+                        <div class="stat-label">Mission Savings</div>
                     </div>
                 </div>
-                <div class="content-split" style="margin-top: 1.5rem;">
-                    <div class="data-panel">
-                        <h3 style="color: #ff4757; margin-bottom: 1.2rem; text-align: center; font-size: clamp(0.9rem, 3vw, 1.2rem);">❌ CURRENT APPROACH</h3>
+
+                <div class="image-placeholder" style="margin: 2rem 0;">
+                    <div>
+                        <strong>Performance Comparison Chart</strong><br>
+                        <em>Place performance-chart.jpg here</em><br>
+                        (Before/after metrics visualization)
+                    </div>
+                </div>
+                
+                <div class="content-grid" style="margin-top: 2rem;">
+                    <div class="data-card">
+                        <h3 style="color: var(--error-red); text-align: center; margin-bottom: 1rem;">Current Approach</h3>
                         <div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
-                                <strong>Heavy passive shielding</strong> - Expensive transport
+                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                                <strong>Heavy passive shielding</strong> - Expensive transport costs
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
-                                <strong>Manual maintenance</strong> - 40+ hours/week wasted
+                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                                <strong>Manual maintenance</strong> - 40+ hours weekly
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
+                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Reactive repairs</strong> - Equipment fails first
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
-                                <strong>No threat prediction</strong> - Always surprised
-                            </div>
                         </div>
                     </div>
-                    <div class="data-panel">
-                        <h3 style="color: #00ff87; margin-bottom: 1.2rem; text-align: center; font-size: clamp(0.9rem, 3vw, 1.2rem);">✅ RADS-M INNOVATION</h3>
+                    <div class="data-card">
+                        <h3 style="color: var(--success-green); text-align: center; margin-bottom: 1rem;">RADS-M Solution</h3>
                         <div>
-                            <div style="padding: 0.8rem; background: rgba(0,255,135,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
+                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Adaptive magnetic shield</strong> - Lightweight protection
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(0,255,135,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
+                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Autonomous maintenance</strong> - Zero human time
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(0,255,135,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
-                                <strong>Predictive prevention</strong> - Stops failures early
-                            </div>
-                            <div style="padding: 0.8rem; background: rgba(0,255,135,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: clamp(0.7rem, 2.2vw, 0.9rem);">
-                                <strong>48-hour forecasting</strong> - Always prepared
+                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                                <strong>Predictive prevention</strong> - Prevents failures
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Scene 6: Final Call to Action -->
-        <div class="scene scene-6">
-            <div class="content-viewport">
-                <div style="text-align: center; width: 100%;">
-                    <div class="title-massive" style="font-size: clamp(2rem, 8vw, 5rem); margin-bottom: 0.5rem;">
-                        THE FUTURE
-                    </div>
-                    <div class="subtitle-glow" style="margin-bottom: 2rem;">
+
+        <!-- Scene 6: Call to Action -->
+        <div class="scene" id="scene-6">
+            <div class="scene-content content-single">
+                <h1 class="title-primary" style="font-size: clamp(2.5rem, 7vw, 4.5rem);">THE FUTURE</h1>
+                <p class="subtitle">Making Mars habitable for humanity</p>
+                
+                <div class="data-card" style="max-width: 800px; margin: 2rem auto;">
+                    <h2 style="color: var(--mars-red); margin-bottom: 1.5rem; font-size: 1.8rem; text-align: center;">Why RADS-M Succeeds</h2>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                        <div class="solution-card">
+                            <h4 style="color: var(--success-green); margin-bottom
                         Of Human Civilization on Mars
                     </div>
                     <div class="data-panel" style="max-width: 800px; margin: 0 auto; width: 100%;">
