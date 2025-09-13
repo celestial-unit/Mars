@@ -352,7 +352,7 @@
                 linear-gradient(rgba(139, 0, 0, 0.4), rgba(0, 0, 0, 0.8)),
                 radial-gradient(circle at center, #cd5c23 20%, #a0522d 60%, #8b4513 100%);
         }
-        .scene-2, .scene-3, .scene-4 {
+        .scene-2, .scene-3, .scene-4, .scene-7 {
             background: 
                 radial-gradient(circle at 30% 40%, rgba(0, 255, 135, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 70% 60%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
@@ -386,6 +386,105 @@
         .audio-bar:nth-child(3) { animation-delay: 0.2s; }
         .audio-bar:nth-child(4) { animation-delay: 0.3s; }
         .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+        /* Energy Visualization */
+        .energy-chart {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .energy-axis {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #333;
+        }
+        .energy-bar {
+            position: absolute;
+            bottom: 0;
+            width: 60px;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .energy-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 80px;
+            left: 0;
+            color: #ccc;
+        }
+        .energy-value {
+            position: absolute;
+            top: -20px;
+            font-size: 0.7rem;
+            text-align: center;
+            width: 80px;
+            left: 0;
+            color: #00ff87;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+        }
+        .energy-scale {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: #666;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .ai-optimization {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        .optimization-card {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(0, 255, 135, 0.1);
+            border-left: 3px solid #00ff87;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .optimization-header {
+            color: #00ff87;
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .practical-example {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #ff6b35;
+            border-radius: 10px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .example-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+        }
+        .example-label {
+            color: #ccc;
+        }
+        .example-value {
+            color: #00ff87;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+        }
         /* Mobile Responsive Design */
         @media (max-width: 768px) {
             .content-split {
@@ -432,6 +531,12 @@
             }
             .audio-visualizer {
                 bottom: 60px;
+            }
+            .energy-chart {
+                height: 150px;
+            }
+            .ai-optimization {
+                flex-direction: column;
             }
         }
         /* Touch device optimizations */
@@ -696,6 +801,10 @@
                             <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">AI & ML</h4>
                             <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">TensorFlow neural networks • Predictive algorithms • Real-time pattern recognition</p>
                         </div>
+                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(255,107,53,0.05); border-radius: 8px; border-left: 3px solid #ff6b35;">
+                            <h4 style="color: #ff6b35; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">Cybersecurity</h4>
+                            <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">Zero-trust architecture • Quantum-resistant encryption • Autonomous threat detection</p>
+                        </div>
                         <div style="margin: 1rem 0; padding: 1rem; background: rgba(0,255,135,0.05); border-radius: 8px; border-left: 3px solid #00ff87;">
                             <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">IoT Network</h4>
                             <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.85rem);">200+ sensors • LoRaWAN mesh • Edge computing • Real-time processing</p>
@@ -818,7 +927,7 @@
                                 </div>
                                 <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
                                     <span style="color: #00ff87; font-size: 1.1em;">💡</span>
-                                    <div><strong style="color: #00ff87;">Team expertise:</strong> AI prediction </div>
+                                    <div><strong style="color: #00ff87;">Team expertise:</strong> AI prediction + cybersecurity</div>
                                 </div>
                                 <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
                                     <span style="color: #00ff87; font-size: 1.1em;">📊</span>
@@ -850,6 +959,132 @@
                                 MAKE MARS HABITABLE
                             </button>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Scene 7: Energy Scaling Analysis -->
+        <div class="scene scene-7">
+            <div class="content-viewport">
+                <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(2rem, 6vw, 3.5rem); text-align: center; color: #00ff87; margin-bottom: 1rem;">
+                    ENERGY SCALING ANALYSIS
+                </h1>
+                <div style="text-align: center; color: #ccc; font-size: clamp(0.9rem, 3vw, 1.3rem); margin-bottom: 2rem;">
+                    Physics-Based Power Requirements
+                </div>
+                
+                <div class="data-panel" style="margin-bottom: 2rem;">
+                    <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">⚡ ENERGY SCALING PRINCIPLE</h3>
+                    <div style="font-size: clamp(0.9rem, 3vw, 1.2rem); line-height: 1.6;">
+                        <p style="margin-bottom: 1rem;"><strong>Stored magnetic energy scales with B²:</strong></p>
+                        <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 1rem 0; border-left: 3px solid #ff6b35;">
+                            <p style="margin: 0.5rem 0;"><strong>E ∼ B²</strong></p>
+                            <p style="margin: 0.5rem 0;">For a 10 m radius coil:</p>
+                            <p style="margin: 0.5rem 0; color: #00ff87;">0.5 T → ~0.42 GJ (~116 kWh)</p>
+                            <p style="margin: 0.5rem 0; color: #00ff87;">2 T → ~6.7 GJ (~1,860 kWh)</p>
+                        </div>
+                        <p style="margin: 1rem 0; color: #00ff87;">✅ That's 16× more energy than 0.5 T, but still orders of magnitude below 10 T (~46,000 MWh).</p>
+                        <p style="margin: 1rem 0;">This is achievable with a small nuclear reactor + battery/SMES hybrid system.</p>
+                    </div>
+                </div>
+                
+                <div class="data-panel" style="margin-bottom: 2rem;">
+                    <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">🛡️ PROTECTION CAPABILITY BY FIELD STRENGTH</h3>
+                    <div class="content-split" style="gap: 2rem;">
+                        <div style="flex: 1;">
+                            <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid #ff6b35;">
+                                <h4 style="color: #ff6b35; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">0.5 T Field</h4>
+                                <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.9rem);">
+                                    ✓ Deflects most SEP protons (&lt;200 MeV)<br>
+                                    ✓ Reduces acute dose during solar storms<br>
+                                    ✓ Minimal chronic protection
+                                </p>
+                            </div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="background: rgba(0,255,135,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
+                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">1–2 T Field</h4>
+                                <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.9rem);">
+                                    ✓ Affects higher-energy SEPs (hundreds of MeV)<br>
+                                    ✓ Begins impacting lower-energy GCRs (GeV range)<br>
+                                    ✓ Provides meaningful partial chronic exposure reduction
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: clamp(0.8rem, 2.2vw, 1rem); color: #666;">
+                        <p><strong>Note:</strong> Full GCR protection is impossible for hab-scale volumes with current technology, but partial reduction is highly valuable.</p>
+                    </div>
+                </div>
+                
+                <div class="data-panel" style="margin-bottom: 2rem;">
+                    <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">🤖 AI OPTIMIZATION STRATEGIES</h3>
+                    <div class="ai-optimization">
+                        <div class="optimization-card">
+                            <div class="optimization-header">⏱️ Predictive Operation</div>
+                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Use solar wind data to forecast SEP arrival. Only ramp field when storm is imminent, not continuously.</p>
+                        </div>
+                        <div class="optimization-card">
+                            <div class="optimization-header">🔋 Energy Scheduling</div>
+                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Slow pre-charge using renewables + nuclear base load during low-demand periods. Burst to 2 T during critical windows.</p>
+                        </div>
+                        <div class="optimization-card">
+                            <div class="optimization-header">🔌 Staged Control</div>
+                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Divide coil into segments; energize only needed sections based on storm intensity and exposure areas.</p>
+                        </div>
+                        <div class="optimization-card">
+                            <div class="optimization-header">❄️ Cryogenic Optimization</div>
+                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Keep superconductor temperature just above minimum needed, reducing continuous cooling energy.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="data-panel">
+                    <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">📊 PRACTICAL ENERGY EXAMPLE</h3>
+                    <div class="practical-example">
+                        <div class="example-row">
+                            <span class="example-label">Nuclear Baseline:</span>
+                            <span class="example-value">100 kW</span>
+                        </div>
+                        <div class="example-row">
+                            <span class="example-label">Storage (Battery/SMES):</span>
+                            <span class="example-value">1 MWh</span>
+                        </div>
+                        <div class="example-row">
+                            <span class="example-label">Coil Radius:</span>
+                            <span class="example-value">10 m</span>
+                        </div>
+                        <div class="example-row">
+                            <span class="example-label">Target Field:</span>
+                            <span class="example-value">2 T</span>
+                        </div>
+                        <div class="example-row">
+                            <span class="example-label">Energy Required:</span>
+                            <span class="example-value">~1,860 kWh</span>
+                        </div>
+                        <div class="example-row">
+                            <span class="example-label">Charging Time (100kW):</span>
+                            <span class="example-value">~18.6 hours</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; font-size: clamp(0.8rem, 2.2vw, 1rem); color: #ccc; text-align: center;">
+                        <p>AI manages partial coil charging + battery bursts to optimize peak power requirements.</p>
+                        <p style="color: #00ff87; margin-top: 0.5rem;"><strong>Result:</strong> Continuous protection at low cost, no massive instant-power draws.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; text-align: center;">
+                    <div style="background: linear-gradient(45deg, rgba(0,255,135,0.1), rgba(255,107,53,0.1)); border: 2px solid #00ff87; border-radius: 15px; padding: 1.5rem; display: inline-block;">
+                        <h2 style="color: #00ff87; font-family: 'Orbitron', monospace; font-size: clamp(1.2rem, 4vw, 1.8rem); margin-bottom: 1rem;">✅ BOTTOM LINE</h2>
+                        <p style="font-size: clamp(0.9rem, 3vw, 1.2rem); line-height: 1.4;">
+                            0.5–2 T is a realistic, deployable range for hab-scale Mars shielding.<br>
+                            AI + nuclear combination maximizes efficiency, ensures safety during solar storms,<br>
+                            and saves energy compared to "always-on" mode.
+                        </p>
+                        <p style="margin-top: 1rem; color: #ccc; font-size: clamp(0.8rem, 2.2vw, 1rem);">
+                            Passive shielding (regolith, water) still needed for GCRs, but the system reduces<br>
+                            acute risks and provides valuable partial chronic exposure protection.
+                        </p>
                     </div>
                 </div>
             </div>
