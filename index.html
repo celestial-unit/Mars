@@ -6,88 +6,63 @@
     <title>RADS-M: Mars Colony Protection Protocol</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         :root {
-            --mars-red: #cd5c23;
-            --mars-dark: #8b3a1a;
-            --tech-blue: #00a3ff;
-            --success-green: #00d4aa;
-            --warning-orange: #ff8c42;
-            --error-red: #ff4757;
+            /* Lighter color palette for projector visibility */
+            --mars-red: #ff7a45;
+            --mars-dark: #e05d30;
+            --tech-blue: #40c4ff;
+            --success-green: #00efb2;
+            --warning-orange: #ffb45c;
+            --error-red: #ff6b6b;
             --text-primary: #ffffff;
-            --text-secondary: #b8bcc8;
-            --text-tertiary: #6c7293;
+            --text-secondary: #e0e0e0;
+            --text-tertiary: #a0a0a0;
             --bg-primary: #000000;
-            --bg-secondary: #0a0a0f;
-            --bg-card: rgba(15, 15, 20, 0.9);
-            --border-subtle: rgba(255, 255, 255, 0.1);
-            --border-accent: rgba(205, 92, 35, 0.5);
+            --bg-secondary: #121212;
+            --bg-card: rgba(30, 30, 40, 0.95);
+            --border-subtle: rgba(255, 255, 255, 0.2);
+            --border-accent: rgba(255, 122, 69, 0.6);
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            overflow: hidden;
-            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+            min-height: 100vh;
+            line-height: 1.6;
         }
-
         .presentation-container {
             position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
+            width: 100%;
+            min-height: 100vh;
         }
-
-        /* Background Effects */
+        /* Enhanced Background Effects for Projector */
         .mars-atmosphere {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 15% 25%, rgba(205, 92, 35, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 85% 75%, rgba(139, 58, 26, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 15% 25%, rgba(255, 122, 69, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(224, 93, 48, 0.15) 0%, transparent 60%),
                 linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            animation: atmosphericDrift 30s ease-in-out infinite;
+            z-index: -1;
         }
-
-        @keyframes atmosphericDrift {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
-            33% { transform: scale(1.02) rotate(0.5deg); opacity: 0.9; }
-            66% { transform: scale(0.98) rotate(-0.5deg); opacity: 0.85; }
-        }
-
-        /* Scene Management */
+        /* Scrollable Scene Management */
         .scene {
-            position: absolute;
             width: 100%;
-            height: 100%;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-        }
-
-        .scene.active {
+            padding: 2rem 0;
             opacity: 1;
             transform: translateX(0);
         }
-
-        .scene.exit {
-            transform: translateX(-50px);
-            opacity: 0;
-        }
-
         /* Layout Components */
         .scene-content {
             width: 100%;
@@ -97,14 +72,12 @@
             position: relative;
             z-index: 2;
         }
-
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             align-items: center;
         }
-
         .content-single {
             display: flex;
             flex-direction: column;
@@ -113,8 +86,7 @@
             max-width: 900px;
             margin: 0 auto;
         }
-
-        /* Typography */
+        /* Enhanced Typography for Projector */
         .title-primary {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
@@ -124,9 +96,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(255, 122, 69, 0.3);
         }
-
         .title-secondary {
             font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 700;
@@ -134,7 +106,6 @@
             color: var(--text-primary);
             margin-bottom: 1.5rem;
         }
-
         .subtitle {
             font-size: clamp(1.2rem, 3vw, 1.8rem);
             font-weight: 400;
@@ -142,70 +113,65 @@
             line-height: 1.4;
             margin-bottom: 2rem;
         }
-
         .body-large {
             font-size: clamp(1rem, 2.5vw, 1.2rem);
             line-height: 1.6;
             color: var(--text-secondary);
         }
-
         .mono-text {
             font-family: 'JetBrains Mono', monospace;
             font-feature-settings: 'liga' 0;
+            color: var(--text-secondary);
         }
-
-        /* Cards and Panels */
+        /* Cards and Panels with Enhanced Visibility */
         .data-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             padding: 2rem;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
-
         .data-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 1px;
+            height: 2px;
             background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
         }
-
         .threat-card {
-            background: rgba(139, 0, 0, 0.1);
-            border: 1px solid var(--error-red);
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid var(--error-red);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 1.5rem 0;
         }
-
         .solution-card {
-            background: rgba(0, 212, 170, 0.1);
-            border: 1px solid var(--success-green);
+            background: rgba(0, 239, 178, 0.1);
+            border: 2px solid var(--success-green);
             border-radius: 12px;
             padding: 1.5rem;
             margin: 1rem 0;
         }
-
         /* Image Containers */
         .concept-image {
             width: 100%;
             height: auto;
             border-radius: 12px;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--border-subtle);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             background: var(--bg-secondary);
             display: block;
         }
-
         .image-placeholder {
             width: 100%;
             height: 300px;
-            background: linear-gradient(135deg, var(--bg-secondary), rgba(205, 92, 35, 0.1));
+            background: linear-gradient(135deg, var(--bg-secondary), rgba(255, 122, 69, 0.15));
             border: 2px dashed var(--border-accent);
             border-radius: 12px;
             display: flex;
@@ -215,8 +181,8 @@
             font-size: 0.9rem;
             text-align: center;
             padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
-
         /* Statistics */
         .stats-grid {
             display: grid;
@@ -224,30 +190,31 @@
             gap: 2rem;
             margin: 2rem 0;
         }
-
         .stat-item {
             text-align: center;
             padding: 2rem 1rem;
             background: var(--bg-card);
             border-radius: 12px;
             border: 1px solid var(--border-subtle);
+            transition: transform 0.3s ease;
         }
-
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
         .stat-value {
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
             color: var(--success-green);
             margin-bottom: 0.5rem;
             font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 2px 8px rgba(0, 239, 178, 0.4);
         }
-
         .stat-label {
             font-size: 0.9rem;
             color: var(--text-tertiary);
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         /* Technical Specs */
         .spec-grid {
             display: grid;
@@ -255,28 +222,29 @@
             gap: 1.5rem;
             margin: 2rem 0;
         }
-
         .spec-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
-            border-left: 3px solid var(--tech-blue);
+            border-left: 4px solid var(--tech-blue);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
-
+        .spec-item:hover {
+            background: rgba(64, 196, 255, 0.1);
+            transform: translateX(5px);
+        }
         .spec-label {
             color: var(--text-secondary);
         }
-
         .spec-value {
             color: var(--success-green);
             font-weight: 600;
         }
-
         /* Feature Lists */
         .feature-list {
             display: grid;
@@ -284,37 +252,42 @@
             gap: 1rem;
             margin: 2rem 0;
         }
-
         .feature-item {
             padding: 1.2rem;
-            background: rgba(0, 163, 255, 0.05);
+            background: rgba(64, 196, 255, 0.1);
             border-radius: 8px;
-            border-left: 3px solid var(--tech-blue);
+            border-left: 4px solid var(--tech-blue);
+            transition: all 0.3s ease;
         }
-
+        .feature-item:hover {
+            background: rgba(64, 196, 255, 0.2);
+            transform: translateY(-3px);
+        }
         .feature-title {
             font-weight: 600;
             color: var(--tech-blue);
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
-
         .feature-description {
             font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.4;
         }
-
         /* Navigation */
         .nav-controls {
             position: fixed;
             bottom: 2rem;
-            right: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             gap: 0.5rem;
             z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
         }
-
         .nav-button {
             background: rgba(0, 0, 0, 0.8);
             border: 1px solid var(--border-accent);
@@ -330,43 +303,43 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
         .nav-button:hover {
-            background: rgba(205, 92, 35, 0.1);
+            background: rgba(255, 122, 69, 0.2);
             border-color: var(--mars-red);
             transform: translateY(-1px);
         }
-
         /* Progress Indicator */
         .progress-indicator {
             position: fixed;
-            top: 2rem;
-            left: 2rem;
+            top: 1rem;
+            right: 1rem;
             z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
         }
-
         .progress-bar {
             width: 200px;
-            height: 2px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 1px;
+            border-radius: 2px;
             overflow: hidden;
+            margin-top: 0.5rem;
         }
-
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--mars-red), var(--warning-orange));
             width: 0;
             transition: width 0.5s ease;
+            border-radius: 2px;
         }
-
         .progress-text {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.7rem;
             color: var(--text-tertiary);
             margin-top: 0.5rem;
         }
-
         /* Call to Action */
         .cta-button {
             background: linear-gradient(135deg, var(--mars-red), var(--warning-orange));
@@ -381,56 +354,67 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 2rem;
+            box-shadow: 0 8px 25px rgba(255, 122, 69, 0.4);
         }
-
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(205, 92, 35, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 122, 69, 0.6);
         }
-
         /* Responsive Design */
         @media (max-width: 1024px) {
             .content-grid {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
+            .title-primary {
+                font-size: clamp(2.5rem, 8vw, 5rem);
+            }
+            .title-secondary {
+                font-size: clamp(1.8rem, 5vw, 3rem);
+            }
         }
-
         @media (max-width: 768px) {
             .scene-content {
                 padding: 1rem;
             }
-
             .data-card {
                 padding: 1.5rem;
             }
-
             .nav-controls {
                 bottom: 1rem;
-                right: 1rem;
-                flex-direction: column;
+                left: 50%;
+                transform: translateX(-50%);
+                flex-direction: row;
             }
-
             .progress-indicator {
-                top: 1rem;
-                left: 1rem;
+                top: 0.5rem;
+                right: 0.5rem;
             }
-
             .progress-bar {
                 width: 150px;
             }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .spec-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            .image-placeholder {
+                height: 200px;
+            }
         }
-
         /* Animation Utilities */
         .fade-in {
             animation: fadeIn 0.8s ease-out forwards;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         /* Accessibility */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -438,6 +422,14 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
+        }
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Section spacing for scrolling */
+        .scene {
+            scroll-margin-top: 100px;
         }
     </style>
 </head>
@@ -447,18 +439,17 @@
         
         <!-- Progress Indicator -->
         <div class="progress-indicator">
+            <div class="progress-text mono-text">SCENE <span id="current-scene">1</span> OF <span id="total-scenes">7</span></div>
             <div class="progress-bar">
-                <div class="progress-fill"></div>
+                <div class="progress-fill" id="progress-fill"></div>
             </div>
-            <div class="progress-text mono-text">SCENE <span id="current-scene">1</span> OF <span id="total-scenes">6</span></div>
         </div>
 
         <!-- Scene 1: Problem Statement -->
-        <div class="scene active" id="scene-1">
+        <div class="scene" id="scene-1">
             <div class="scene-content content-single">
                 <h1 class="title-primary">MARS</h1>
                 <p class="subtitle">The greatest engineering challenge humanity has ever faced</p>
-                
                 <div class="threat-card">
                     <h3 style="color: var(--error-red); font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Critical Threat Analysis</h3>
                     <div class="body-large">
@@ -468,7 +459,6 @@
                         <p><strong>Current solutions:</strong> Inadequate for long-term habitation</p>
                     </div>
                 </div>
-
                 <div class="image-placeholder">
                     <div>
                         <strong>Mars Surface Hazards</strong><br>
@@ -486,23 +476,19 @@
                     <div>
                         <h1 class="title-secondary">RADS-M</h1>
                         <p class="subtitle">Radiation Adaptive Defense System - Mars</p>
-                        
                         <div class="solution-card">
                             <h4 class="feature-title">Predictive AI Core</h4>
                             <p class="feature-description">Neural networks analyze solar wind data to predict radiation events 48+ hours in advance</p>
                         </div>
-                        
                         <div class="solution-card">
                             <h4 class="feature-title">Magnetic Shielding Array</h4>
                             <p class="feature-description">Superconducting coils generate targeted electromagnetic fields to deflect harmful particles</p>
                         </div>
-                        
                         <div class="solution-card">
                             <h4 class="feature-title">Autonomous Maintenance</h4>
                             <p class="feature-description">Self-coordinating robotic fleet handles system upkeep without human intervention</p>
                         </div>
                     </div>
-                    
                     <div>
                         <div class="image-placeholder">
                             <div>
@@ -520,7 +506,6 @@
         <div class="scene" id="scene-3">
             <div class="scene-content">
                 <h2 class="title-secondary" style="text-align: center; margin-bottom: 2rem;">Technical Architecture</h2>
-                
                 <div class="content-grid">
                     <div class="data-card">
                         <h3 style="color: var(--tech-blue); margin-bottom: 1.5rem; font-weight: 600;">Magnetic Field Generator</h3>
@@ -547,7 +532,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="data-card">
                         <h3 style="color: var(--success-green); margin-bottom: 1.5rem; font-weight: 600;">AI Control System</h3>
                         <div class="feature-list">
@@ -570,7 +554,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div style="margin-top: 2rem;">
                     <div class="image-placeholder">
                         <div>
@@ -587,14 +570,12 @@
         <div class="scene" id="scene-4">
             <div class="scene-content">
                 <h2 class="title-secondary" style="text-align: center; margin-bottom: 2rem;">Mission Control Interface</h2>
-                
                 <div class="content-grid">
                     <div class="data-card" style="background: rgba(0, 10, 20, 0.95);">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 1rem;">
                             <h3 style="color: var(--success-green);">RADS-M Control Terminal</h3>
                             <span class="mono-text" style="color: var(--text-tertiary); font-size: 0.8rem;">SOL 1,247 | 14:32 UTC</span>
                         </div>
-                        
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                             <div class="spec-item" style="border-left-color: var(--success-green);">
                                 <span class="spec-label">Shield Status:</span>
@@ -613,8 +594,7 @@
                                 <span class="spec-value" style="color: var(--error-red);">8 Hours</span>
                             </div>
                         </div>
-                        
-                        <div style="background: rgba(255, 140, 66, 0.1); border: 1px solid var(--warning-orange); border-radius: 8px; padding: 1rem;">
+                        <div style="background: rgba(255, 180, 92, 0.1); border: 1px solid var(--warning-orange); border-radius: 8px; padding: 1rem;">
                             <h4 style="color: var(--warning-orange); margin-bottom: 0.8rem; font-size: 0.9rem;">Automated Response Protocol</h4>
                             <div class="mono-text" style="font-size: 0.75rem; line-height: 1.4; color: var(--text-secondary);">
                                 <div>✓ Magnetic coils pre-charging</div>
@@ -625,7 +605,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div>
                         <div class="image-placeholder">
                             <div>
@@ -634,7 +613,6 @@
                                 (Mission control dashboard view)
                             </div>
                         </div>
-                        
                         <div class="data-card" style="margin-top: 1.5rem;">
                             <h3 style="color: var(--mars-red); margin-bottom: 1rem; font-weight: 600;">Technology Stack</h3>
                             <div class="feature-list">
@@ -662,7 +640,6 @@
             <div class="scene-content content-single">
                 <h2 class="title-secondary">Mission Impact</h2>
                 <p class="subtitle">Quantifiable benefits for Mars colonization</p>
-                
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-value">87%</div>
@@ -677,7 +654,6 @@
                         <div class="stat-label">Mission Savings</div>
                     </div>
                 </div>
-
                 <div class="image-placeholder" style="margin: 2rem 0;">
                     <div>
                         <strong>Performance Comparison Chart</strong><br>
@@ -685,18 +661,17 @@
                         (Before/after metrics visualization)
                     </div>
                 </div>
-                
                 <div class="content-grid" style="margin-top: 2rem;">
                     <div class="data-card">
                         <h3 style="color: var(--error-red); text-align: center; margin-bottom: 1rem;">Current Approach</h3>
                         <div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(255,107,107,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Heavy passive shielding</strong> - Expensive transport costs
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(255,107,107,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Manual maintenance</strong> - 40+ hours weekly
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(255,71,87,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(255,107,107,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Reactive repairs</strong> - Equipment fails first
                             </div>
                         </div>
@@ -704,13 +679,13 @@
                     <div class="data-card">
                         <h3 style="color: var(--success-green); text-align: center; margin-bottom: 1rem;">RADS-M Solution</h3>
                         <div>
-                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(0,239,178,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Adaptive magnetic shield</strong> - Lightweight protection
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(0,239,178,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Autonomous maintenance</strong> - Zero human time
                             </div>
-                            <div style="padding: 0.8rem; background: rgba(0,212,170,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
+                            <div style="padding: 0.8rem; background: rgba(0,239,178,0.1); border-radius: 6px; margin: 0.8rem 0; font-size: 0.9rem;">
                                 <strong>Predictive prevention</strong> - Prevents failures
                             </div>
                         </div>
@@ -724,132 +699,100 @@
             <div class="scene-content content-single">
                 <h1 class="title-primary" style="font-size: clamp(2.5rem, 7vw, 4.5rem);">THE FUTURE</h1>
                 <p class="subtitle">Making Mars habitable for humanity</p>
-                
                 <div class="data-card" style="max-width: 800px; margin: 2rem auto;">
                     <h2 style="color: var(--mars-red); margin-bottom: 1.5rem; font-size: 1.8rem; text-align: center;">Why RADS-M Succeeds</h2>
-                    
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
                         <div class="solution-card">
-                            <h4 style="color: var(--success-green); margin-bottom
-                        Of Human Civilization on Mars
+                            <h4 style="color: var(--success-green); margin-bottom: 0.5rem; font-size: 0.9rem;">✅ CREATIVITY</h4>
+                            <p style="font-size: 0.85rem; line-height: 1.3;">First intelligent adaptive protection system</p>
+                        </div>
+                        <div class="solution-card">
+                            <h4 style="color: var(--success-green); margin-bottom: 0.5rem; font-size: 0.9rem;">✅ FEASIBILITY</h4>
+                            <p style="font-size: 0.85rem; line-height: 1.3;">Built on proven NASA research</p>
+                        </div>
+                        <div class="solution-card">
+                            <h4 style="color: var(--success-green); margin-bottom: 0.5rem; font-size: 0.9rem;">✅ TECHNOLOGY</h4>
+                            <p style="font-size: 0.85rem; line-height: 1.3;">Perfect AI, cybersecurity, IoT integration</p>
+                        </div>
+                        <div class="solution-card">
+                            <h4 style="color: var(--success-green); margin-bottom: 0.5rem; font-size: 0.9rem;">✅ PRESENTATION</h4>
+                            <p style="font-size: 0.85rem; line-height: 1.3;">Clear visuals, quantifiable benefits</p>
+                        </div>
                     </div>
-                    <div class="data-panel" style="max-width: 800px; margin: 0 auto; width: 100%;">
-                        <h2 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.5rem; font-size: clamp(1.2rem, 4vw, 2rem);">
-                            🌟 WHY RADS-M WINS
-                        </h2>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-                            <div style="padding: 1rem; background: rgba(0,255,135,0.1); border-radius: 10px; border: 1px solid #00ff87;">
-                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">✅ CREATIVITY</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.85rem); line-height: 1.3;">First intelligent adaptive protection system</p>
+                    <div style="background: linear-gradient(45deg, rgba(255,107,53,0.2), rgba(0,239,178,0.2)); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border: 2px solid var(--mars-red);">
+                        <h2 style="font-size: clamp(1.5rem, 5vw, 2.5rem); margin-bottom: 1rem;">🚀 THE BOTTOM LINE</h2>
+                        <p style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1rem; font-weight: 300; line-height: 1.2;">
+                            "RADS-M doesn't just protect Mars colonists —<br>
+                            <strong style="color: var(--mars-red);">it makes Mars settlement economically viable for the first time."</strong>
+                        </p>
+                        <div style="margin: 1.5rem 0; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; font-size: clamp(0.8rem, 2.2vw, 1rem);">
+                            <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
+                                <span style="color: var(--success-green); font-size: 1.1em;">🎯</span>
+                                <div><strong style="color: var(--success-green);">Addresses Mars's #1 threat:</strong> Radiation that kills humans</div>
                             </div>
-                            <div style="padding: 1rem; background: rgba(0,255,135,0.1); border-radius: 10px; border: 1px solid #00ff87;">
-                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">✅ FEASIBILITY</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.85rem); line-height: 1.3;">Built on proven NASA research</p>
+                            <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
+                                <span style="color: var(--success-green); font-size: 1.1em;">🔬</span>
+                                <div><strong style="color: var(--success-green);">Real NASA research:</strong> MAARSS magnetic shielding studies</div>
                             </div>
-                            <div style="padding: 1rem; background: rgba(0,255,135,0.1); border-radius: 10px; border: 1px solid #00ff87;">
-                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">✅ TECHNOLOGY</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.85rem); line-height: 1.3;">Perfect AI, cybersecurity, IoT integration</p>
+                            <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
+                                <span style="color: var(--success-green); font-size: 1.1em;">💡</span>
+                                <div><strong style="color: var(--success-green);">Team expertise:</strong> AI prediction + cybersecurity</div>
                             </div>
-                            <div style="padding: 1rem; background: rgba(0,255,135,0.1); border-radius: 10px; border: 1px solid #00ff87;">
-                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">✅ PRESENTATION</h4>
-                                <p style="font-size: clamp(0.7rem, 2vw, 0.85rem); line-height: 1.3;">Clear visuals, quantifiable benefits</p>
+                            <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
+                                <span style="color: var(--success-green); font-size: 1.1em;">📊</span>
+                                <div><strong style="color: var(--success-green);">Quantifiable impact:</strong> 87% radiation reduction, $73M savings</div>
+                            </div>
+                            <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
+                                <span style="color: var(--success-green); font-size: 1.1em;">🌟</span>
+                                <div><strong style="color: var(--success-green);">Mission enabler:</strong> Makes Mars colonization possible</div>
                             </div>
                         </div>
-                        <div style="background: linear-gradient(45deg, rgba(255,107,53,0.2), rgba(0,255,135,0.2)); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border: 2px solid #ff6b35;">
-                            <h2 style="font-size: clamp(1.5rem, 5vw, 2.5rem); margin-bottom: 1rem; font-family: 'Orbitron', monospace;">🚀 THE BOTTOM LINE</h2>
-                            <p style="font-size: clamp(1rem, 3vw, 1.5rem); margin-bottom: 1rem; font-weight: 300; line-height: 1.2;">
-                                "RADS-M doesn't just protect Mars colonists —<br>
-                                <strong style="color: #ff6b35;">it makes Mars settlement economically viable for the first time."</strong>
-                            </p>
-                            <div style="margin: 1.5rem 0; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; font-size: clamp(0.8rem, 2.2vw, 1rem);">
-                                <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
-                                    <span style="color: #00ff87; font-size: 1.1em;">🎯</span>
-                                    <div><strong style="color: #00ff87;">Addresses Mars's #1 threat:</strong> Radiation that kills humans</div>
-                                </div>
-                                <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
-                                    <span style="color: #00ff87; font-size: 1.1em;">🔬</span>
-                                    <div><strong style="color: #00ff87;">Real NASA research:</strong> MAARSS magnetic shielding studies</div>
-                                </div>
-                                <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
-                                    <span style="color: #00ff87; font-size: 1.1em;">💡</span>
-                                    <div><strong style="color: #00ff87;">Team expertise:</strong> AI prediction + cybersecurity</div>
-                                </div>
-                                <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
-                                    <span style="color: #00ff87; font-size: 1.1em;">📊</span>
-                                    <div><strong style="color: #00ff87;">Quantifiable impact:</strong> 87% radiation reduction, $73M savings</div>
-                                </div>
-                                <div style="margin: 0.8rem 0; padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; display: flex; align-items: flex-start; gap: 0.8rem;">
-                                    <span style="color: #00ff87; font-size: 1.1em;">🌟</span>
-                                    <div><strong style="color: #00ff87;">Mission enabler:</strong> Makes Mars colonization possible</div>
-                                </div>
-                            </div>
-                            <button style="
-                                background: linear-gradient(45deg, #ff6b35, #00ff87);
-                                border: none;
-                                padding: clamp(0.8rem, 3vw, 1.5rem) clamp(1.5rem, 5vw, 3rem);
-                                color: #000;
-                                font-size: clamp(0.9rem, 3vw, 1.5rem);
-                                border-radius: 50px;
-                                cursor: pointer;
-                                font-weight: 900;
-                                text-transform: uppercase;
-                                font-family: 'Orbitron', monospace;
-                                box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
-                                transition: all 0.3s ease;
-                                letter-spacing: 1px;
-                                margin-top: 1rem;
-                                width: 100%;
-                                max-width: 350px;
-                            " onmouseover="this.style.transform='translateY(-3px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(255, 107, 53, 0.6)'" onmouseout="this.style.transform='translateY(0px) scale(1)'; this.style.boxShadow='0 0 30px rgba(255, 107, 53, 0.5)'" onclick="showSuccessMessage(event)">
-                                MAKE MARS HABITABLE
-                            </button>
-                        </div>
+                        <button class="cta-button" onclick="showSuccessMessage(event)">
+                            MAKE MARS HABITABLE
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Scene 7: Energy Scaling Analysis -->
-        <div class="scene scene-7">
-            <div class="content-viewport">
-                <h1 style="font-family: 'Orbitron', monospace; font-size: clamp(2rem, 6vw, 3.5rem); text-align: center; color: #00ff87; margin-bottom: 1rem;">
-                    ENERGY SCALING ANALYSIS
-                </h1>
-                <div style="text-align: center; color: #ccc; font-size: clamp(0.9rem, 3vw, 1.3rem); margin-bottom: 2rem;">
-                    Physics-Based Power Requirements
-                </div>
+        <div class="scene" id="scene-7">
+            <div class="scene-content">
+                <h1 class="title-secondary" style="text-align: center;">ENERGY SCALING ANALYSIS</h1>
+                <p class="subtitle" style="text-align: center;">Physics-Based Power Requirements</p>
                 
-                <div class="data-panel" style="margin-bottom: 2rem;">
-                    <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">⚡ ENERGY SCALING PRINCIPLE</h3>
-                    <div style="font-size: clamp(0.9rem, 3vw, 1.2rem); line-height: 1.6;">
-                        <p style="margin-bottom: 1rem;"><strong>Stored magnetic energy scales with B²:</strong></p>
-                        <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 1rem 0; border-left: 3px solid #ff6b35;">
+                <div class="data-card">
+                    <h3 style="color: var(--mars-red); font-weight: 600; margin-bottom: 1.2rem;">⚡ ENERGY SCALING PRINCIPLE</h3>
+                    <div class="body-large">
+                        <p><strong>Stored magnetic energy scales with B²:</strong></p>
+                        <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 1rem 0; border-left: 3px solid var(--mars-red);">
                             <p style="margin: 0.5rem 0;"><strong>E ∼ B²</strong></p>
                             <p style="margin: 0.5rem 0;">For a 10 m radius coil:</p>
-                            <p style="margin: 0.5rem 0; color: #00ff87;">0.5 T → ~0.42 GJ (~116 kWh)</p>
-                            <p style="margin: 0.5rem 0; color: #00ff87;">2 T → ~6.7 GJ (~1,860 kWh)</p>
+                            <p style="margin: 0.5rem 0; color: var(--success-green);">0.5 T → ~0.42 GJ (~116 kWh)</p>
+                            <p style="margin: 0.5rem 0; color: var(--success-green);">2 T → ~6.7 GJ (~1,860 kWh)</p>
                         </div>
-                        <p style="margin: 1rem 0; color: #00ff87;">✅ That's 16× more energy than 0.5 T, but still orders of magnitude below 10 T (~46,000 MWh).</p>
+                        <p style="margin: 1rem 0; color: var(--success-green);">✅ That's 16× more energy than 0.5 T, but still orders of magnitude below 10 T (~46,000 MWh).</p>
                         <p style="margin: 1rem 0;">This is achievable with a small nuclear reactor + battery/SMES hybrid system.</p>
                     </div>
                 </div>
-                
-                <div class="data-panel" style="margin-bottom: 2rem;">
-                    <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">🛡️ PROTECTION CAPABILITY BY FIELD STRENGTH</h3>
-                    <div class="content-split" style="gap: 2rem;">
-                        <div style="flex: 1;">
-                            <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid #ff6b35;">
-                                <h4 style="color: #ff6b35; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">0.5 T Field</h4>
-                                <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.9rem);">
+
+                <div class="data-card">
+                    <h3 style="color: var(--success-green); font-weight: 600; margin-bottom: 1.2rem;">🛡️ PROTECTION CAPABILITY BY FIELD STRENGTH</h3>
+                    <div class="content-grid">
+                        <div>
+                            <div style="background: rgba(255,107,53,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid var(--mars-red);">
+                                <h4 style="color: var(--mars-red); margin-bottom: 0.5rem; font-size: 1rem;">0.5 T Field</h4>
+                                <p style="color: var(--text-secondary); line-height: 1.4;">
                                     ✓ Deflects most SEP protons (&lt;200 MeV)<br>
                                     ✓ Reduces acute dose during solar storms<br>
                                     ✓ Minimal chronic protection
                                 </p>
                             </div>
                         </div>
-                        <div style="flex: 1;">
-                            <div style="background: rgba(0,255,135,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid #00ff87;">
-                                <h4 style="color: #00ff87; margin-bottom: 0.5rem; font-size: clamp(0.8rem, 2.5vw, 1rem);">1–2 T Field</h4>
-                                <p style="color: #ccc; line-height: 1.4; font-size: clamp(0.7rem, 2vw, 0.9rem);">
+                        <div>
+                            <div style="background: rgba(0,239,178,0.1); border-radius: 8px; padding: 1rem; margin: 0.8rem 0; border-left: 3px solid var(--success-green);">
+                                <h4 style="color: var(--success-green); margin-bottom: 0.5rem; font-size: 1rem;">1–2 T Field</h4>
+                                <p style="color: var(--text-secondary); line-height: 1.4;">
                                     ✓ Affects higher-energy SEPs (hundreds of MeV)<br>
                                     ✓ Begins impacting lower-energy GCRs (GeV range)<br>
                                     ✓ Provides meaningful partial chronic exposure reduction
@@ -857,176 +800,137 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-top: 1rem; font-size: clamp(0.8rem, 2.2vw, 1rem); color: #666;">
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-tertiary);">
                         <p><strong>Note:</strong> Full GCR protection is impossible for hab-scale volumes with current technology, but partial reduction is highly valuable.</p>
                     </div>
                 </div>
-                
-                <div class="data-panel" style="margin-bottom: 2rem;">
-                    <h3 style="color: #ff6b35; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">🤖 AI OPTIMIZATION STRATEGIES</h3>
-                    <div class="ai-optimization">
-                        <div class="optimization-card">
-                            <div class="optimization-header">⏱️ Predictive Operation</div>
-                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Use solar wind data to forecast SEP arrival. Only ramp field when storm is imminent, not continuously.</p>
+
+                <div class="data-card">
+                    <h3 style="color: var(--mars-red); font-weight: 600; margin-bottom: 1.2rem;">🤖 AI OPTIMIZATION STRATEGIES</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="padding: 1rem; background: rgba(255,107,53,0.1); border-radius: 8px; border-left: 3px solid var(--mars-red);">
+                            <div style="font-weight: 600; color: var(--mars-red); margin-bottom: 0.5rem;">⏱️ Predictive Operation</div>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">Use solar wind data to forecast SEP arrival. Only ramp field when storm is imminent, not continuously.</p>
                         </div>
-                        <div class="optimization-card">
-                            <div class="optimization-header">🔋 Energy Scheduling</div>
-                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Slow pre-charge using renewables + nuclear base load during low-demand periods. Burst to 2 T during critical windows.</p>
+                        <div style="padding: 1rem; background: rgba(255,107,53,0.1); border-radius: 8px; border-left: 3px solid var(--mars-red);">
+                            <div style="font-weight: 600; color: var(--mars-red); margin-bottom: 0.5rem;">🔋 Energy Scheduling</div>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">Slow pre-charge using renewables + nuclear base load during low-demand periods. Burst to 2 T during critical windows.</p>
                         </div>
-                        <div class="optimization-card">
-                            <div class="optimization-header">🔌 Staged Control</div>
-                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Divide coil into segments; energize only needed sections based on storm intensity and exposure areas.</p>
+                        <div style="padding: 1rem; background: rgba(255,107,53,0.1); border-radius: 8px; border-left: 3px solid var(--mars-red);">
+                            <div style="font-weight: 600; color: var(--mars-red); margin-bottom: 0.5rem;">🔌 Staged Control</div>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">Divide coil into segments; energize only needed sections based on storm intensity and exposure areas.</p>
                         </div>
-                        <div class="optimization-card">
-                            <div class="optimization-header">❄️ Cryogenic Optimization</div>
-                            <p style="color: #ccc; font-size: clamp(0.7rem, 2vw, 0.9rem); line-height: 1.4;">Keep superconductor temperature just above minimum needed, reducing continuous cooling energy.</p>
+                        <div style="padding: 1rem; background: rgba(255,107,53,0.1); border-radius: 8px; border-left: 3px solid var(--mars-red);">
+                            <div style="font-weight: 600; color: var(--mars-red); margin-bottom: 0.5rem;">❄️ Cryogenic Optimization</div>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">Keep superconductor temperature just above minimum needed, reducing continuous cooling energy.</p>
                         </div>
                     </div>
                 </div>
-                
-                <div class="data-panel">
-                    <h3 style="color: #00ff87; font-family: 'Orbitron', monospace; margin-bottom: 1.2rem; font-size: clamp(0.9rem, 3vw, 1.2rem);">📊 PRACTICAL ENERGY EXAMPLE</h3>
-                    <div class="practical-example">
-                        <div class="example-row">
-                            <span class="example-label">Nuclear Baseline:</span>
-                            <span class="example-value">100 kW</span>
+
+                <div class="data-card">
+                    <h3 style="color: var(--success-green); font-weight: 600; margin-bottom: 1.2rem;">📊 PRACTICAL ENERGY EXAMPLE</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Nuclear Baseline:</div>
+                            <div style="color: var(--success-green); font-weight: 600;">100 kW</div>
                         </div>
-                        <div class="example-row">
-                            <span class="example-label">Storage (Battery/SMES):</span>
-                            <span class="example-value">1 MWh</span>
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Storage (Battery/SMES):</div>
+                            <div style="color: var(--success-green); font-weight: 600;">1 MWh</div>
                         </div>
-                        <div class="example-row">
-                            <span class="example-label">Coil Radius:</span>
-                            <span class="example-value">10 m</span>
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Coil Radius:</div>
+                            <div style="color: var(--success-green); font-weight: 600;">10 m</div>
                         </div>
-                        <div class="example-row">
-                            <span class="example-label">Target Field:</span>
-                            <span class="example-value">2 T</span>
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Target Field:</div>
+                            <div style="color: var(--success-green); font-weight: 600;">2 T</div>
                         </div>
-                        <div class="example-row">
-                            <span class="example-label">Energy Required:</span>
-                            <span class="example-value">~1,860 kWh</span>
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Energy Required:</div>
+                            <div style="color: var(--success-green); font-weight: 600;">~1,860 kWh</div>
                         </div>
-                        <div class="example-row">
-                            <span class="example-label">Charging Time (100kW):</span>
-                            <span class="example-value">~18.6 hours</span>
+                        <div style="padding: 0.8rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                            <div style="color: var(--text-tertiary); font-size: 0.8rem; margin-bottom: 0.3rem;">Charging Time (100kW):</div>
+                            <div style="color: var(--success-green); font-weight: 600;">~18.6 hours</div>
                         </div>
                     </div>
-                    <div style="margin-top: 1rem; font-size: clamp(0.8rem, 2.2vw, 1rem); color: #ccc; text-align: center;">
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); text-align: center;">
                         <p>AI manages partial coil charging + battery bursts to optimize peak power requirements.</p>
-                        <p style="color: #00ff87; margin-top: 0.5rem;"><strong>Result:</strong> Continuous protection at low cost, no massive instant-power draws.</p>
+                        <p style="color: var(--success-green); margin-top: 0.5rem;"><strong>Result:</strong> Continuous protection at low cost, no massive instant-power draws.</p>
                     </div>
                 </div>
-                
-                <div style="margin-top: 2rem; text-align: center;">
-                    <div style="background: linear-gradient(45deg, rgba(0,255,135,0.1), rgba(255,107,53,0.1)); border: 2px solid #00ff87; border-radius: 15px; padding: 1.5rem; display: inline-block;">
-                        <h2 style="color: #00ff87; font-family: 'Orbitron', monospace; font-size: clamp(1.2rem, 4vw, 1.8rem); margin-bottom: 1rem;">✅ BOTTOM LINE</h2>
-                        <p style="font-size: clamp(0.9rem, 3vw, 1.2rem); line-height: 1.4;">
-                            0.5–2 T is a realistic, deployable range for hab-scale Mars shielding.<br>
-                            AI + nuclear combination maximizes efficiency, ensures safety during solar storms,<br>
-                            and saves energy compared to "always-on" mode.
-                        </p>
-                        <p style="margin-top: 1rem; color: #ccc; font-size: clamp(0.8rem, 2.2vw, 1rem);">
-                            Passive shielding (regolith, water) still needed for GCRs, but the system reduces<br>
-                            acute risks and provides valuable partial chronic exposure protection.
-                        </p>
-                    </div>
+
+                <div class="data-card" style="text-align: center;">
+                    <h2 style="color: var(--success-green); margin-bottom: 1rem;">✅ BOTTOM LINE</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.4; color: var(--text-secondary);">
+                        0.5–2 T is a realistic, deployable range for hab-scale Mars shielding.<br>
+                        AI + nuclear combination maximizes efficiency, ensures safety during solar storms,<br>
+                        and saves energy compared to "always-on" mode.
+                    </p>
+                    <p style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.9rem;">
+                        Passive shielding (regolith, water) still needed for GCRs, but the system reduces<br>
+                        acute risks and provides valuable partial chronic exposure protection.
+                    </p>
                 </div>
             </div>
         </div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-button" onclick="prevScene()">← PREV</button>
+            <button class="nav-button" onclick="nextScene()">NEXT →</button>
+        </div>
     </div>
-    <div class="nav-control">
-        <button class="nav-button" onclick="prevScene()">← PREV</button>
-        <button class="nav-button" onclick="nextScene()">NEXT →</button>
-    </div>
-    <div class="audio-visualizer">
-        <div class="audio-bar"></div>
-        <div class="audio-bar"></div>
-        <div class="audio-bar"></div>
-        <div class="audio-bar"></div>
-        <div class="audio-bar"></div>
-    </div>
+
     <script>
-        let currentScene = 0;
+        // Get all scenes
         const scenes = document.querySelectorAll('.scene');
         const totalScenes = scenes.length;
-        const progressBar = document.querySelector('.progress-bar');
-        const cursor = document.querySelector('.cursor');
+        const progressFill = document.getElementById('progress-fill');
+        const currentSceneElement = document.getElementById('current-scene');
+        const totalScenesElement = document.getElementById('total-scenes');
         
-        // Custom cursor tracking - only on devices with mouse
-        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.addEventListener('mousedown', () => {
-                cursor.classList.add('clicked');
-            });
-            document.addEventListener('mouseup', () => {
-                cursor.classList.remove('clicked');
-            });
-        }
+        // Set total scenes count
+        totalScenesElement.textContent = totalScenes;
         
-        // Generate particles
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-            document.querySelector('.particle-field').appendChild(particle);
-            setTimeout(() => {
-                if (particle.parentNode) {
-                    particle.remove();
-                }
-            }, 25000);
-        }
+        // Initialize current scene
+        let currentSceneIndex = 0;
         
-        // Create particles periodically (fewer on mobile)
-        const isMobile = window.innerWidth <= 768;
-        const particleInterval = isMobile ? 4000 : 2000;
-        const initialParticles = isMobile ? 5 : 10;
-        setInterval(createParticle, particleInterval);
-        
-        // Initialize with some particles
-        for (let i = 0; i < initialParticles; i++) {
-            setTimeout(createParticle, i * 500);
-        }
-        
+        // Update progress bar
         function updateProgress() {
-            const circumference = 2 * Math.PI * 20;
-            const progress = ((currentScene + 1) / totalScenes) * circumference;
-            progressBar.style.strokeDashoffset = circumference - progress;
+            const progress = ((currentSceneIndex + 1) / totalScenes) * 100;
+            progressFill.style.width = `${progress}%`;
+            currentSceneElement.textContent = currentSceneIndex + 1;
         }
         
-        function showScene(n) {
-            scenes.forEach((scene, index) => {
-                scene.classList.remove('active', 'exit');
-                if (index === currentScene) {
-                    scene.classList.add('exit');
-                }
-            });
-            currentScene = (n + totalScenes) % totalScenes;
-            setTimeout(() => {
-                scenes[currentScene].classList.add('active');
+        // Navigate to specific scene
+        function goToScene(index) {
+            if (index >= 0 && index < totalScenes) {
+                currentSceneIndex = index;
                 updateProgress();
-            }, 200);
+                
+                // Update URL hash
+                window.location.hash = `scene-${currentSceneIndex + 1}`;
+            }
         }
         
+        // Next scene
         function nextScene() {
-            playTransitionSound();
-            showScene(currentScene + 1);
+            if (currentSceneIndex < totalScenes - 1) {
+                goToScene(currentSceneIndex + 1);
+                // Smooth scroll to next scene
+                scenes[currentSceneIndex].scrollIntoView({ behavior: 'smooth' });
+            }
         }
         
+        // Previous scene
         function prevScene() {
-            playTransitionSound();
-            showScene(currentScene - 1);
-        }
-        
-        // Simulate transition sound
-        function playTransitionSound() {
-            // This is a placeholder for sound effect
-            console.log("Transition sound played");
+            if (currentSceneIndex > 0) {
+                goToScene(currentSceneIndex - 1);
+                // Smooth scroll to previous scene
+                scenes[currentSceneIndex].scrollIntoView({ behavior: 'smooth' });
+            }
         }
         
         // Keyboard navigation
@@ -1040,40 +944,44 @@
             }
         });
         
-        // Touch/swipe navigation for mobile
-        let startX = 0;
-        let startY = 0;
-        document.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-        }, { passive: true });
-        
-        document.addEventListener('touchend', (e) => {
-            if (!startX || !startY) return;
-            
-            let endX = e.changedTouches[0].clientX;
-            let endY = e.changedTouches[0].clientY;
-            let diffX = startX - endX;
-            let diffY = startY - endY;
-            
-            // Only trigger if horizontal swipe is more significant than vertical
-            if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
-                if (diffX > 0) {
-                    nextScene();
-                } else {
-                    prevScene();
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const match = hash.match(/scene-(\d+)/);
+                if (match) {
+                    const sceneNum = parseInt(match[1]) - 1;
+                    if (sceneNum >= 0 && sceneNum < totalScenes) {
+                        goToScene(sceneNum);
+                    }
                 }
             }
+        });
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            // Check for hash in URL
+            const hash = window.location.hash;
+            if (hash) {
+                const match = hash.match(/scene-(\d+)/);
+                if (match) {
+                    const sceneNum = parseInt(match[1]) - 1;
+                    if (sceneNum >= 0 && sceneNum < totalScenes) {
+                        goToScene(sceneNum);
+                    }
+                }
+            } else {
+                // Default to first scene
+                goToScene(0);
+            }
             
-            // Reset values
-            startX = 0;
-            startY = 0;
-        }, { passive: true });
+            // Ensure we're scrolled to the correct scene
+            scenes[currentSceneIndex].scrollIntoView({ behavior: 'auto' });
+        });
         
         // Success message when button is clicked
         function showSuccessMessage(event) {
             event.preventDefault();
-            
             // Create success overlay
             const successOverlay = document.createElement('div');
             successOverlay.style.cssText = `
@@ -1089,96 +997,53 @@
                 align-items: center;
                 z-index: 10000;
                 backdrop-filter: blur(10px);
-                font-family: 'Orbitron', monospace;
+                font-family: 'Inter', sans-serif;
                 text-align: center;
                 padding: 2rem;
+                animation: fadeIn 0.5s ease;
             `;
-            
             successOverlay.innerHTML = `
-                <div style="font-size: 5rem; margin-bottom: 1rem; color: #00ff87;">✓</div>
-                <h2 style="font-size: 2.5rem; color: #00ff87; margin-bottom: 1rem;">SUCCESS!</h2>
-                <p style="font-size: 1.2rem; color: #ccc; margin-bottom: 2rem; max-width: 600px;">
+                <div style="font-size: 5rem; margin-bottom: 1rem; color: var(--success-green);">✓</div>
+                <h2 style="font-size: 2.5rem; color: var(--success-green); margin-bottom: 1rem;">SUCCESS!</h2>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px;">
                     Your mission to make Mars habitable has been approved.<br>
                     RADS-M deployment scheduled for next launch window.
                 </p>
                 <button style="
-                    background: linear-gradient(45deg, #ff6b35, #00ff87);
+                    background: linear-gradient(135deg, var(--mars-red), var(--warning-orange));
                     border: none;
                     padding: 1rem 2rem;
-                    color: #000;
+                    color: white;
                     font-size: 1.2rem;
-                    border-radius: 50px;
+                    border-radius: 8px;
                     cursor: pointer;
-                    font-weight: 900;
+                    font-weight: 600;
                     text-transform: uppercase;
-                    font-family: 'Orbitron', monospace;
-                    box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+                    font-family: 'Inter', sans-serif;
+                    box-shadow: 0 8px 25px rgba(255, 122, 69, 0.4);
                     transition: all 0.3s ease;
-                " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(255, 107, 53, 0.6)'"
-                   onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 0 30px rgba(255, 107, 53, 0.5)'"
+                    letter-spacing: 1px;
+                " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(255, 122, 69, 0.6)'"
+                   onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 8px 25px rgba(255, 122, 69, 0.4)'"
                    onclick="closeSuccessMessage()">
                     RETURN TO BASE
                 </button>
             `;
-            
             document.body.appendChild(successOverlay);
-            
-            // Add pulse animation
-            const pulseInterval = setInterval(() => {
-                successOverlay.style.opacity = '0.8';
-                setTimeout(() => {
-                    successOverlay.style.opacity = '1';
-                }, 500);
-            }, 2000);
-            
-            // Store interval reference for cleanup
-            successOverlay.dataset.interval = pulseInterval;
         }
         
         function closeSuccessMessage() {
-            const successOverlay = document.querySelector('[data-interval]');
+            const successOverlay = document.querySelector('[style*="z-index: 10000"]');
             if (successOverlay) {
-                const interval = successOverlay.dataset.interval;
-                clearInterval(interval);
                 document.body.removeChild(successOverlay);
             }
         }
         
-        // Initialize progress bar
-        updateProgress();
-        
-        // Add hash change listener for deep linking
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash;
-            if (hash) {
-                const sceneNum = parseInt(hash.replace('#scene-', '')) - 1;
-                if (sceneNum >= 0 && sceneNum < totalScenes) {
-                    showScene(sceneNum);
-                }
-            }
-        });
-        
-        // Set initial hash if none
-        if (!window.location.hash) {
-            window.location.hash = '#scene-1';
-        } else {
-            const sceneNum = parseInt(window.location.hash.replace('#scene-', '')) - 1;
-            if (sceneNum >= 0 && sceneNum < totalScenes) {
-                showScene(sceneNum);
-            }
+        // Add fade-in animation
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
-        // Preload images for better performance
-        const preloadImages = [
-            'https://placehold.co/800x400/orange/white?text=Mars+Habitat',
-            'https://placehold.co/600x400/darkred/white?text=Mars+Surface'
-        ];
-        
-        preloadImages.forEach(src => {
-            const img = new Image();
-            img.src = src;
-        });
     </script>
 </body>
 </html>
-```
